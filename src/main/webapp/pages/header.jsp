@@ -26,7 +26,7 @@
 
         <a class="active" href="${pageContext.request.contextPath}/controller?command=home"><fmt:message key="header.common.home"/></a>
 
-        <a href="${pageContext.request.contextPath}/controller?command=books-list"><fmt:message key="header.common.books"/></a>
+        <a href="${pageContext.request.contextPath}/books"><fmt:message key="header.common.books"/></a>
 
         <c:choose>
             <%-- Menu bar for user only--%>
