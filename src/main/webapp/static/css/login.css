@@ -27,7 +27,7 @@ body {
     background-image: url("../img/background_dark.png");
     background-repeat: no-repeat;
     background-size: cover;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .container {

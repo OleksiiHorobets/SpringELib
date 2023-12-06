@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -85,7 +84,7 @@
             </div>
             <div class="form__input-group">
                 <input type="password" id="signupPassword" class="form__input" name="regPassword" required autofocus
-                       placeholder="<fmt:message key="commonForm.password"/>" >
+                       placeholder="<fmt:message key="commonForm.password"/>">
                 <div class="form__input-error-message">
 
                 </div>
@@ -106,12 +105,14 @@
             </div>
             <div class="form__input-group">
                 <input type="text" id="firstName" class="form__input" name="regFirstName" required autofocus
-                       placeholder="<fmt:message key="registrationForm.firstName"/>" value="${sessionScope.regFirstNameVal}">
+                       placeholder="<fmt:message key="registrationForm.firstName"/>"
+                       value="${sessionScope.regFirstNameVal}">
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
                 <input type="text" id="secondName" class="form__input" name="regSecondName" required autofocus
-                       placeholder="<fmt:message key="registrationForm.secondName"/>" value="${sessionScope.regSecondNameVal}">
+                       placeholder="<fmt:message key="registrationForm.secondName"/>"
+                       value="${sessionScope.regSecondNameVal}">
                 <div class="form__input-error-message"></div>
             </div>
             <button class="form__button" type="submit"><fmt:message key="registrationForm.btn.create"/></button>

@@ -41,7 +41,7 @@ body {
     padding-bottom: 10px;
 }
 
-.orders-list-title, .users-orders-title{
+.orders-list-title, .users-orders-title {
     color: white;
     font-size: 36px;
     font-weight: 700;
@@ -160,18 +160,17 @@ body {
 .order-book-impossible {
     background: #a40606;
 }
-.order-book-impossible:hover{
+
+.order-book-impossible:hover {
     background: #d90f0f;
 }
 
 
-.success-msg{
+.success-msg {
     font-size: 24px;
     color: rgb(85, 247, 85);
     text-align: center;
 }
-
-
 
 
 /*.overdue-tr{*/

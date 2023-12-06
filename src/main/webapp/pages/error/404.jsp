@@ -22,7 +22,7 @@
     <jsp:include page="/pages/header.jsp"/>
     <div class="msg-container">
         <div class="messages">
-            <div class="message"><fmt:message key="error.common.wrong.page.title"/> </div>
+            <div class="message"><fmt:message key="error.common.wrong.page.title"/></div>
             <div class="message2"><fmt:message key="error.common.wrong.page.description"/></div>
         </div>
     </div>

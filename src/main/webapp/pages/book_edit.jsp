@@ -49,13 +49,14 @@
                 </c:when>
                 <c:otherwise>
                     <input name="command" type="hidden" value="add-book">
-<%--                    <input name="command" type="hidden" value="add-book">--%>
+                    <%--                    <input name="command" type="hidden" value="add-book">--%>
                 </c:otherwise>
             </c:choose>
 
             <input name="book_id" type="hidden" value="${sessionScope.book.bookId}">
             <div class="elem-group">
-                <label class="book-edit-label" for="bookTitle"><fmt:message key="admin.books.edit.form.label.book.title"/></label>
+                <label class="book-edit-label" for="bookTitle"><fmt:message
+                        key="admin.books.edit.form.label.book.title"/></label>
                 <input
                         type="text"
                         id="bookTitle"
@@ -71,7 +72,8 @@
             </div>
 
             <div class="elem-group inlined">
-                <label  class="book-edit-label" for="firstName"><fmt:message key="admin.books.edit.form.label.author.first.name"/></label>
+                <label class="book-edit-label" for="firstName"><fmt:message
+                        key="admin.books.edit.form.label.author.first.name"/></label>
                 <input
                         type="text"
                         id="firstName"
@@ -86,7 +88,8 @@
                 <div class="error-msg-container"></div>
             </div>
             <div class="elem-group inlined">
-                <label class="book-edit-label" for="secondName"><fmt:message key="admin.books.edit.form.label.author.second.name"/></label>
+                <label class="book-edit-label" for="secondName"><fmt:message
+                        key="admin.books.edit.form.label.author.second.name"/></label>
                 <input
                         type="text"
                         id="secondName"
@@ -101,7 +104,8 @@
                 <div class="error-msg-container"></div>
             </div>
             <div class="elem-group inlined">
-                <label  class="book-edit-label" for="genre-selection"><fmt:message key="admin.books.edit.form.label.select.genre"/></label>
+                <label class="book-edit-label" for="genre-selection"><fmt:message
+                        key="admin.books.edit.form.label.select.genre"/></label>
                 <select class="book-edit-select" id="genre-selection" name="genre" required>
                     <c:if test="${not empty sessionScope.book.genre }">
                         <option value="${sessionScope.book.genre}">${sessionScope.book.genre}</option>
@@ -125,7 +129,8 @@
                 </select>
             </div>
             <div class="elem-group">
-                <label class="book-edit-label" for="copies"><fmt:message key="admin.books.edit.form.label.copies"/></label>
+                <label class="book-edit-label" for="copies"><fmt:message
+                        key="admin.books.edit.form.label.copies"/></label>
                 <input
                         type="number"
                         class="edit-book-input"
@@ -141,7 +146,8 @@
 
             <hr/>
             <div class="elem-group inlined">
-                <label class="book-edit-label" for="pages"><fmt:message key="admin.books.edit.form.label.pages"/></label>
+                <label class="book-edit-label" for="pages"><fmt:message
+                        key="admin.books.edit.form.label.pages"/></label>
                 <input
                         class="edit-book-input"
                         type="number"
@@ -156,7 +162,8 @@
             </div>
 
             <div class="elem-group inlined">
-                <label class="book-edit-label" for="publication-date"><fmt:message key="admin.books.edit.form.label.publication.date"/></label>
+                <label class="book-edit-label" for="publication-date"><fmt:message
+                        key="admin.books.edit.form.label.publication.date"/></label>
                 <input
                         class="edit-book-input"
                         type="date"

@@ -89,13 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
         }
 
-        if(confirmPass!==password){
+        if (confirmPass !== password) {
             console.log("passwords do not match ERROR");
             e.preventDefault()
         }
     });
-
-
 
 
     document.querySelectorAll(".form__input").forEach(inputElement => {

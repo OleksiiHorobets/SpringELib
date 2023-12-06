@@ -32,7 +32,8 @@
                     <p class="users-list-title"><fmt:message key="admin.user.users.title"/></p>
                 </c:when>
                 <c:otherwise>
-                    <p class="users-list-title" style="text-align: center"><fmt:message key="admin.user.reader.title"/></p>
+                    <p class="users-list-title" style="text-align: center"><fmt:message
+                            key="admin.user.reader.title"/></p>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -54,7 +55,7 @@
 
                     <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                         <th><fmt:message key="admin.users.user.role"/></th>
-                        <th  style="min-width: 150px;"><fmt:message key="admin.users.user.status"/></th>
+                        <th style="min-width: 150px;"><fmt:message key="admin.users.user.status"/></th>
                         <th style="min-width: 230px;"><fmt:message key="admin.users.user.change.role"/></th>
                     </c:if>
 
@@ -90,7 +91,7 @@
 
                         <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                             <td> ${users.role} </td>
-                            
+
                             <c:choose>
                                 <c:when test="${users.role ne 'ADMIN'}">
                                     <c:choose>
@@ -159,6 +160,7 @@
                                                     .change-role-to-user:hover a p.label:after {
                                                         content: '<fmt:message key="admin.users.action.lib"/>';
                                                     }
+
                                                     .change-role-to-user:hover a p.label span {
                                                         display: none;
                                                     }
@@ -186,7 +188,8 @@
                                                 <div class="removed-book-div">
                                                     <a class="remove-link"
                                                        href="controller?command=change-user-role&role=user&user_id=${users.userId}">
-                                                        <p class="label"><span class="align" style="text-align: center;">
+                                                        <p class="label"><span class="align"
+                                                                               style="text-align: center;">
                                                             <fmt:message key="admin.users.msg.librarian"/></span></p>
                                                     </a>
                                                 </div>
@@ -200,7 +203,7 @@
                                             <td><fmt:message key="admin.user.msg.unban.first"/></td>
                                         </c:when>
                                         <c:otherwise>
-                                           <td><fmt:message key="admin.user.msg.unsupported"/></td>
+                                            <td><fmt:message key="admin.user.msg.unsupported"/></td>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:otherwise>

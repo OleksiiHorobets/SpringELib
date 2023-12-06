@@ -28,6 +28,7 @@ body {
     margin-top: 20px;
     padding: 20px 30px;
 }
+
 .operation-title {
     color: white;
     font-size: 36px;
@@ -68,7 +69,8 @@ div.elem-group.inlined {
     padding: 10px;
     outline: 0;
 }
-.edit-book-input{
+
+.edit-book-input {
     display: block;
     border-radius: 2px;
     border: 2px solid #777;
@@ -108,6 +110,7 @@ button:hover {
     outline: 0;
     border: 2px solid #b0bec5;
 }
+
 /* input:invalid {
     border-color: #dd2c00;
   } */
@@ -115,19 +118,22 @@ button:hover {
 .edit-book-input:focus {
     border: 2px solid black;
 }
+
 .edit-book-input:valid {
     border: 2px solid rgb(85, 247, 85);
 }
+
 .edit-book-input:invalid {
     border: 2px solid #dd2c00;
 }
-.error-msg{
+
+.error-msg {
     font-size: 24px;
     color: red;
     text-align: center;
 }
 
-.success-msg{
+.success-msg {
     font-size: 24px;
     color: rgb(85, 247, 85);
     text-align: center;

@@ -41,10 +41,12 @@
             <div class="user-data">${requestScope.user.phoneNumber}</div>
 
 
-            <div class="elem-group inlined"><label class="profile-label"><fmt:message key="common.profile.first.name"/></label>
+            <div class="elem-group inlined"><label class="profile-label"><fmt:message
+                    key="common.profile.first.name"/></label>
                 <div class="user-data">${requestScope.user.firstName}</div>
             </div>
-            <div class="elem-group inlined"><label class="profile-label"><fmt:message key="common.profile.second.name"/></label>
+            <div class="elem-group inlined"><label class="profile-label"><fmt:message
+                    key="common.profile.second.name"/></label>
                 <div class="user-data">${requestScope.user.secondName}</div>
             </div>
 

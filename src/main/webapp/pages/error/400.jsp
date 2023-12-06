@@ -15,7 +15,8 @@
     <title>Not authorized!</title>
     <%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/not_authorized.css"/>--%>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index.css"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/unsupported_operation.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/static/css/unsupported_operation.css"/>
 
 </head>
 <body>
@@ -23,7 +24,7 @@
     <jsp:include page="/pages/header.jsp"/>
     <div class="msg-container">
         <div class="messages">
-            <div class="message"><fmt:message key="error.common.unsupported.operation.title"/> </div>
+            <div class="message"><fmt:message key="error.common.unsupported.operation.title"/></div>
             <div class="message2"><fmt:message key="error.common.unsupported.operation.description"/></div>
         </div>
     </div>

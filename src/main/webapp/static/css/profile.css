@@ -27,6 +27,7 @@ body {
     background-color: rgba(35, 35, 35, 0.885);
     padding: 20px 30px;
 }
+
 .profile-header {
     color: white;
     font-size: 36px;
@@ -78,7 +79,7 @@ button:hover {
     border: 2px solid black;
 }
 
-.user-data{
+.user-data {
     /*margin-left: ;*/
     margin-bottom: 20px;
     padding: 20px 16px;

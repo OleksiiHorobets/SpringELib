@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="custom" uri="/WEB-INF/custom.tld" %>
+<%--<%@ taglib prefix="custom" uri="/WEB-INF/custom.tld" %>--%>
 
 
 <c:set var="language"
@@ -85,8 +85,8 @@
                     </c:if>
                     <td> ${orders.bookTitle} </td>
 
-                    <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:mm", language)} </td>
-                    <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy HH:mm", language)} </td>
+                    <%--                    <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:mm", language)} </td>--%>
+                    <%--                    <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy HH:mm", language)} </td>--%>
 
 
                     <c:choose>
@@ -99,7 +99,7 @@
                     </c:choose>
                     <c:choose>
                         <c:when test="${orders.returnDate != null}">
-                            <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>
+                            <%--                            <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>--%>
                         </c:when>
                         <c:when test="${orders.returnDate == null and orders.fine != 0.0}">
                             <td><fmt:message key="orders.common.returned.overdue"/></td>

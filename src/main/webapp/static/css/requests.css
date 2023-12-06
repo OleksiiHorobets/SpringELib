@@ -41,7 +41,7 @@ body {
     padding-bottom: 10px;
 }
 
-.orders-list-title, .users-orders-title{
+.orders-list-title, .users-orders-title {
     color: white;
     font-size: 36px;
     font-weight: 700;
@@ -160,23 +160,26 @@ body {
 .order-book-impossible {
     background: #a40606;
 }
-.order-book-impossible:hover{
+
+.order-book-impossible:hover {
     background: #d90f0f;
 }
 
 
-.success-msg{
+.success-msg {
     font-size: 24px;
     color: rgb(85, 247, 85);
     text-align: center;
 }
 
-.accept-order{
+.accept-order {
     background: rgb(48, 140, 48);
 }
-.accept-order:hover{
+
+.accept-order:hover {
     background: rgb(63, 182, 63);
 }
+
 .decline-order {
     background: rgb(171, 43, 43);
 }
@@ -185,7 +188,7 @@ body {
     background: rgb(220, 57, 57);
 }
 
-.orders_table{
-    border:none;
+.orders_table {
+    border: none;
 }
 

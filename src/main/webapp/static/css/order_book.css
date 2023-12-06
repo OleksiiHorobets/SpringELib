@@ -28,6 +28,7 @@ body {
     margin-top: 20px;
     padding: 20px 30px;
 }
+
 .order-header {
     color: white;
     font-size: 36px;
@@ -38,6 +39,7 @@ label,
 input {
     display: block;
 }
+
 label {
     font-size: 12px;
     text-transform: uppercase;
@@ -76,7 +78,6 @@ select {
 }
 
 
-
 hr {
     border: 1px dotted #ccc;
 }
@@ -96,7 +97,7 @@ button:hover {
     border: 2px solid black;
 }
 
-.book-data{
+.book-data {
     margin-bottom: 15px;
     font-size: 18px;
     color: white;
