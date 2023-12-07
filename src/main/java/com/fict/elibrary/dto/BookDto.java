@@ -15,7 +15,6 @@ public final class BookDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 0L;
 
-    private final Long id;
     private final String title;
     private final Integer pages;
     private final LocalDate publicationDate;

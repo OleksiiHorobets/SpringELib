@@ -562,7 +562,7 @@
                     <%--                </tr>--%>
                     <c:forEach var="booksList" items="${requestScope.booksList.content}" varStatus="loop">
                 <tr>
-                    <td> ${loop.count + (requestScope.pageable.pageNumber) * requestScope.pageable.pageSize} </td>
+                    <td> ${loop.count + (requestScope.booksList.pageable.pageNumber) * requestScope.pageable.pageSize} </td>
                     <td> ${booksList.title} </td>
                     <td> ${booksList.genre} </td>
                     <td> ${booksList.author.firstName} ${booksList.author.lastName}</td>
@@ -665,45 +665,41 @@
         </div>
         <div class="pages_container">
             <%--For displaying Previous link except for the 1st page --%>
-            <c:if test="${requestScope.page != 1}">
-
+            <c:if test="${requestScope.booksList.pageable.pageNumber != 0}">
                 <c:choose>
                     <c:when test="${searchContent != null}">
-                        <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.pageable.pageNumber}&order_by=${order_by}&dir=${dir}">&laquo;</a>
+                        <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.booksList.pageable.pageNumber}&order_by=${order_by}&dir=${dir}">&laquo;</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="books?page=${requestScope.pageable.pageNumber}&order_by=${order_by}&dir=${dir}">&laquo;</a>
+                        <a href="books?page=${requestScope.booksList.pageable.pageNumber}&order_by=${order_by}&dir=${dir}">&laquo;</a>
                     </c:otherwise>
                 </c:choose>
             </c:if>
             <%--For displaying Page numbers.
                 The when condition does not display a link for the current page--%>
-            <c:forEach begin="1" end="${requestScope.totalPages}" var="i">
+            <c:forEach begin="0" end="${requestScope.booksList.totalPages - 1}" var="i">
                 <c:choose>
-                    <c:when test="${requestScope.page eq i}">
-                        <%--                        <a href="books?page=${i}&order_by=${order_by}&dir=${dir}"--%>
-                        <%--                           class="active"> ${i}</a>--%>
+                    <c:when test="${requestScope.booksList.pageable.pageNumber eq i}">
                         <c:choose>
                             <c:when test="${searchContent != null}">
                                 <a class="active"
-                                   href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&dir=${dir}">${i}</a>
+                                   href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&dir=${dir}">${i + 1}</a>
                             </c:when>
                             <c:otherwise>
                                 <a href="books?page=${i}&order_by=${order_by}&dir=${dir}"
-                                   class="active"> ${i}</a>
+                                   class="active"> ${i + 1}</a>
                             </c:otherwise>
                         </c:choose>
 
-
                     </c:when>
                     <c:otherwise>
-                        <%--                        <a href="books?page=${i}&order_by=${order_by}&dir=${dir}">${i}</a>--%>
+                        <%--                        <a href="books?page=${i}&order_by=${order_by}&dir=${dir}">${i + 1}</a>--%>
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&dir=${dir}">${i}</a>
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&dir=${dir}">${i + 1}</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?page=${i}&order_by=${order_by}&dir=${dir}">${i}</a>
+                                <a href="books?page=${i}&order_by=${order_by}&dir=${dir}">${i + 1}</a>
                             </c:otherwise>
                         </c:choose>
 
@@ -711,14 +707,14 @@
                 </c:choose>
             </c:forEach>
             <%--For displaying Next link --%>
-            <c:if test="${requestScope.page lt requestScope.totalPages}">
-                <%--                <a href="books?page=${requestScope.page + 1}&order_by=${order_by}&dir=${dir}">&raquo;</a>--%>
+            <c:if test="${requestScope.booksList.pageable.pageNumber lt requestScope.booksList.totalPages - 1}">
+                <%--                <a href="books?page=${requestScope.booksList.pageable.pageNumber + 1}&order_by=${order_by}&dir=${dir}">&raquo;</a>--%>
                 <c:choose>
                     <c:when test="${searchContent != null}">
-                        <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.page + 1}&order_by=${order_by}&dir=${dir}">&raquo;</a>
+                        <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.booksList.pageable.pageNumber + 1}&order_by=${order_by}&dir=${dir}">&raquo;</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="books?page=${requestScope.page + 1}&order_by=${order_by}&dir=${dir}">&raquo;</a>
+                        <a href="books?page=${requestScope.booksList.pageable.pageNumber + 1}&order_by=${order_by}&dir=${dir}">&raquo;</a>
                     </c:otherwise>
                 </c:choose>
 
