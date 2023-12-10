@@ -89,7 +89,7 @@
 
         <c:choose>
             <c:when test="${sessionScope.user == null}">
-                <a href="${pageContext.request.contextPath}/controller?command=login-page&from=header"><fmt:message
+                <a href="${pageContext.request.contextPath}/login&from=header"><fmt:message
                         key="header.common.login"/></a>
             </c:when>
             <c:otherwise>

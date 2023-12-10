@@ -71,6 +71,8 @@ VALUES ('William', 'Howells'),
        ('Laura', 'Kamoie');
 
 
+SET datestyle = 'ISO, DMY';
+
 INSERT INTO local_lib.books (title, pages, genre_id, publication_date, publisher_id, author_id, copies)
 VALUES ('A Daughter of the Snows', 199, 9, '03.04.2018', 5, 3, 2),
        ('The Near East: 10,000 Years of History', 298, 13, '08.10.2018', 3, 9, 9),
@@ -173,48 +175,42 @@ VALUES ('A Daughter of the Snows', 199, 9, '03.04.2018', 5, 3, 2),
        ('The Diary of Samuel Pepys: A Selection', 271, 3, '09.09.2015', 4, 32, 8);
 
 
-INSERT INTO local_lib.Roles
+INSERT INTO user_data.Roles
     (title)
 VALUES ('USER'),
        ('LIBRARIAN'),
        ('ADMIN');
 
-INSERT INTO local_lib.user_statuses
-    (title)
-VALUES ('normal'),
-       ('blocked');
 
-
-
-INSERT INTO local_lib.Users
-(id, login, password, role_id, status_id, email, phone_number, first_name, second_name)
+INSERT INTO user_data.Users
+(id, username, password, role_id, email, phone_number, first_name, last_name)
 VALUES (10000, 'user',
         '70e9b857aca8d91bc6407f76262723939ea25cdaf74644820afffd28cfdba12d84121fd225a1c7bdac0c7d9116e04a08bde682716e43d24ac31436b8eb8f575a',
-        1, 1, 'usermail@gmail.com', '3802222222', 'alex', 'jhones');
+        1, 'usermail@gmail.com', '3802222222', 'alex', 'jhones');
 
 
-INSERT INTO local_lib.Users
-(id, login, password, role_id, status_id, email, phone_number, first_name, second_name)
-VALUES (10001, 'banned_user',
+INSERT INTO user_data.Users
+(id, username, password, role_id, is_banned, email, phone_number, first_name, last_name)
+VALUES (10001, 'is_banned_user',
         '70e9b857aca8d91bc6407f76262723939ea25cdaf74644820afffd28cfdba12d84121fd225a1c7bdac0c7d9116e04a08bde682716e43d24ac31436b8eb8f575a',
-        1, 1, 'banned@gmail.com', '3804444444', 'top', 'gun');
+        1,true, 'is_banned@gmail.com', '3804444444', 'top', 'gun');
 
 
 --password: user123
 
-INSERT INTO local_lib.Users
-(id, login, password, role_id, status_id, email, phone_number, first_name, second_name)
+INSERT INTO user_data.Users
+(id, username, password, role_id, email, phone_number, first_name, last_name)
 VALUES (10002, 'librarian',
         'e86f447469030010bd4c518389fbe3f1d78b71d5c4bea72bc36b2101af6a0c8d188cdc4fc70e6c7d1dd7aca579d6b82c43855ac8e929ea98d1ef2dff3e5573b2',
-        2, 1, 'librarian@gmail.com', '3803333333', 'mike', 'tayson');
+        2, 'librarian@gmail.com', '3803333333', 'mike', 'tayson');
 
 --password: lib123
 
-INSERT INTO local_lib.Users
-(id, login, password, role_id, status_id, email, phone_number, first_name, second_name)
+INSERT INTO user_data.Users
+(id, username, password, role_id, email, phone_number, first_name, last_name)
 VALUES (10003, 'admin',
         '7fcf4ba391c48784edde599889d6e3f1e47a27db36ecc050cc92f259bfac38afad2c68a1ae804d77075e8fb722503f3eca2b2c1006ee6f6c7b7628cb45fffd1d',
-        3, 1, 'admin@gmail.com', '3801111111', 'max', 'payne');
+        3, 'admin@gmail.com', '3801111111', 'max', 'payne');
 
 
 --password: admin123

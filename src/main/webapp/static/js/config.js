@@ -6,7 +6,7 @@ const en = {
     registration_password_validation_error_msg: 'Password must be from 6 to 30 chars long at least one letter and number',
     registration_passwords_match_error_msg: 'Passwords doesn\'t match!',
     registration_invalid_first_name_error_msg: 'First name must contain from 1 to 30 latin letters or special symbols like ,.\'-',
-    registration_invalid_second_name_error_msg: 'Second name must contain from 1 to 30 latin letters or special symbols like ,.\'-',
+    registration_invalid_last_name_error_msg: 'Second name must contain from 1 to 30 latin letters or special symbols like ,.\'-',
 }
 
 const ua = {
@@ -17,5 +17,5 @@ const ua = {
     registration_password_validation_error_msg: 'Пароль повинен складатись від 6 до 30 символів і містити символи та цифри',
     registration_passwords_match_error_msg: 'Паролі не співпадають',
     registration_invalid_first_name_error_msg: 'Ім\'я повинно містити від 1 до 30 символів латинського алфавіту або спеціальних символів ,.\'-',
-    registration_invalid_second_name_error_msg: 'Прізвище повинно містити від 1 до 30 символів латинського алфавіту або спеціальних символів ,.\'-'
+    registration_invalid_last_name_error_msg: 'Прізвище повинно містити від 1 до 30 символів латинського алфавіту або спеціальних символів ,.\'-'
 }

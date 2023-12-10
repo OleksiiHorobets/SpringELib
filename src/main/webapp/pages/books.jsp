@@ -562,7 +562,7 @@
                     <%--                </tr>--%>
                     <c:forEach var="booksList" items="${requestScope.booksList.content}" varStatus="loop">
                 <tr>
-                    <td> ${loop.count + (requestScope.booksList.pageable.pageNumber) * requestScope.pageable.pageSize} </td>
+                    <td> ${loop.count + (requestScope.booksList.pageable.pageNumber) * requestScope.booksList.size} </td>
                     <td> ${booksList.title} </td>
                     <td> ${booksList.genre} </td>
                     <td> ${booksList.author.firstName} ${booksList.author.lastName}</td>

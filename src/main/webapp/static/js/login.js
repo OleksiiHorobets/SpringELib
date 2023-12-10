@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             if (e.target.id === "secondName" && !e.target.value.match(nameRegex)) {
                 console.log("second name ERROR");
-                setInputError(inputElement, locale === 'en' ? en.registration_invalid_second_name_error_msg : ua.registration_invalid_second_name_error_msg);
+                setInputError(inputElement, locale === 'en' ? en.registration_invalid_last_name_error_msg : ua.registration_invalid_last_name_error_msg);
                 e.preventDefault();
             }
 

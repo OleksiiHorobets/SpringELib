@@ -94,7 +94,7 @@
                         type="text"
                         id="secondName"
                         class="edit-book-input"
-                        name="second_name"
+                        name="last_name"
                         placeholder="<fmt:message key="admin.books.edit.form.placeholder.second.name"/>"
                         pattern="^['a-zA-Z?а-яА-ЯёЁ]{1,50}$"
                         title="<fmt:message key="admin.books.edit.form.validation.msg.name"/>"
