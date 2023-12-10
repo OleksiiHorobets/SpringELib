@@ -1,6 +1,5 @@
 package com.fict.elibrary.security;
 
-import com.fict.elibrary.service.ELibUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,26 +10,31 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final ELibUserService eLibUserService;
+    private final UserDetailsService eLibUserService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvcMatcher) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authz ->{
-                            authz.requestMatchers(new AntPathRequestMatcher("/api/login") ).permitAll();
-                            authz.anyRequest().authenticated();
-                    }
+                .authorizeHttpRequests(authz -> {
+                            authz
+                                    .requestMatchers("/auth/**").permitAll()
+                                    .requestMatchers("/error").permitAll()
+                                    .requestMatchers("/pages/error/**").permitAll()
+                                    .requestMatchers("/pages/**").permitAll()
+                                    .requestMatchers("/static/**").permitAll()
+                                    .anyRequest().authenticated();
+                        }
 
 //                                        .requestMatchers(new AntPathRequestMatcher("/login-action")).permitAll()
 //                                        .anyRequest().authenticated()
@@ -41,25 +45,19 @@ public class SecurityConfig {
 //                                .requestMatchers(DELETE, "/movies/**").hasRole("ADMIN")
 //                                .requestMatchers(POST, "/movies/**").hasRole("ADMIN")
 //                                .anyRequest().authenticated()
-                ).formLogin(
+                )
+                .formLogin(
                         form -> form
-                                .loginPage("/api/login")
+                                .loginPage("/auth/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/books", true) //fixme: check
-//                                .failureUrl("/api/v1/login?error=true")
+                                .defaultSuccessUrl("/books") //fixme: check
+//                                .failureHandler()
+                                .failureUrl("/auth/login?invalidAuth=true")
                                 .permitAll()
-                );
-
-//                .authorizeRequests()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll();
+                ).authenticationProvider(authenticationProvider());
 
 //                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 //                .authenticationProvider(authenticationProvider());
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 //                .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
 
         return http.build();
@@ -67,7 +65,7 @@ public class SecurityConfig {
 
     @Bean
     public MvcRequestMatcher.Builder mvcMatcher(HandlerMappingIntrospector introspector) {
-        return new MvcRequestMatcher.Builder(introspector);
+        return new MvcRequestMatcher.Builder(introspector).servletPath("/");
     }
 
     @Bean

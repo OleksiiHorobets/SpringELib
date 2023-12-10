@@ -1,6 +1,7 @@
 package com.fict.elibrary.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,7 +41,9 @@ public class ELibUser implements UserDetails {
     private String lastName;
 
     @Column(name = "is_banned", nullable = false)
-    private Boolean isBanned;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Boolean isBanned = false;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id")
@@ -50,6 +53,18 @@ public class ELibUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.getAuthority()));
+    }
+
+    public Boolean isBanned() {
+        return isBanned;
+    }
+
+    public void ban() {
+        isBanned = true;
+    }
+
+    public void unban() {
+        isBanned = false;
     }
 
     @Override
@@ -69,7 +84,7 @@ public class ELibUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return isBanned;
+        return !isBanned;
     }
 
     @Override

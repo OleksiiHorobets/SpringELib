@@ -1,21 +1,9 @@
 package com.fict.elibrary.service;
 
-import com.fict.elibrary.repository.ELibUserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import com.fict.elibrary.dto.auth.RegistrationRequest;
+import com.fict.elibrary.exception.UserAlreadyExistsException;
 
-@Service
-@RequiredArgsConstructor
-public class ELibUserService implements UserDetailsService {
-    private final ELibUserRepository eLibUserRepository;
+public interface ELibUserService {
+    void register(RegistrationRequest registrationRequest) throws UserAlreadyExistsException;
 
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return eLibUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found: %s".formatted(username)));
-    }
 }

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS user_data.users
     email        varchar(250) NOT NULL,
     phone_number varchar(25),
     first_name   varchar(50)  NOT NULL,
-    last_name  varchar(50)  NOT NULL,
+    last_name    varchar(50)  NOT NULL,
 
     CONSTRAINT PK_users PRIMARY KEY (id),
     CONSTRAINT FK_users_role FOREIGN KEY (role_id) REFERENCES user_data.roles (id),

@@ -185,31 +185,31 @@ VALUES ('USER'),
 INSERT INTO user_data.Users
 (id, username, password, role_id, email, phone_number, first_name, last_name)
 VALUES (10000, 'user',
-        '70e9b857aca8d91bc6407f76262723939ea25cdaf74644820afffd28cfdba12d84121fd225a1c7bdac0c7d9116e04a08bde682716e43d24ac31436b8eb8f575a',
+        '$argon2id$v=19$m=16384,t=2,p=1$kgBZffntnhd8w753UCymjQ$rbqNvmqwKLf1mtRQcZnfkLe/o2IrjrnJwbLQfysprVk',
         1, 'usermail@gmail.com', '3802222222', 'alex', 'jhones');
 
 
 INSERT INTO user_data.Users
 (id, username, password, role_id, is_banned, email, phone_number, first_name, last_name)
 VALUES (10001, 'is_banned_user',
-        '70e9b857aca8d91bc6407f76262723939ea25cdaf74644820afffd28cfdba12d84121fd225a1c7bdac0c7d9116e04a08bde682716e43d24ac31436b8eb8f575a',
-        1,true, 'is_banned@gmail.com', '3804444444', 'top', 'gun');
+        '$argon2id$v=19$m=16384,t=2,p=1$kgBZffntnhd8w753UCymjQ$rbqNvmqwKLf1mtRQcZnfkLe/o2IrjrnJwbLQfysprVk',
+        1, true, 'is_banned@gmail.com', '3804444444', 'top', 'gun');
 
 
---password: user123
+--password: qwerty123
 
 INSERT INTO user_data.Users
 (id, username, password, role_id, email, phone_number, first_name, last_name)
 VALUES (10002, 'librarian',
-        'e86f447469030010bd4c518389fbe3f1d78b71d5c4bea72bc36b2101af6a0c8d188cdc4fc70e6c7d1dd7aca579d6b82c43855ac8e929ea98d1ef2dff3e5573b2',
+        '$argon2id$v=19$m=16384,t=2,p=1$kgBZffntnhd8w753UCymjQ$rbqNvmqwKLf1mtRQcZnfkLe/o2IrjrnJwbLQfysprVk',
         2, 'librarian@gmail.com', '3803333333', 'mike', 'tayson');
 
---password: lib123
+--password: qwerty123
 
 INSERT INTO user_data.Users
 (id, username, password, role_id, email, phone_number, first_name, last_name)
 VALUES (10003, 'admin',
-        '7fcf4ba391c48784edde599889d6e3f1e47a27db36ecc050cc92f259bfac38afad2c68a1ae804d77075e8fb722503f3eca2b2c1006ee6f6c7b7628cb45fffd1d',
+        '$argon2id$v=19$m=16384,t=2,p=1$kgBZffntnhd8w753UCymjQ$rbqNvmqwKLf1mtRQcZnfkLe/o2IrjrnJwbLQfysprVk',
         3, 'admin@gmail.com', '3801111111', 'max', 'payne');
 
 

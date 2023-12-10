@@ -1,4 +1,6 @@
-CREATE SEQUENCE IF NOT EXISTS local_lib.orders_seq START WITH 1 INCREMENT BY 1;
+CREATE
+SEQUENCE IF NOT EXISTS local_lib.orders_seq START
+WITH 1 INCREMENT BY 1;
 CREATE TABLE IF NOT EXISTS local_lib.orders
 (
     id               bigint    default nextval('local_lib.orders_seq'),

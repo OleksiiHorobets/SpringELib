@@ -20,7 +20,7 @@ public class Role implements GrantedAuthority {
     @Column(name = "title", nullable = false, updatable = false, insertable = false)
     private String title;
 
-    @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
     private List<ELibUser> eLibUserList = new ArrayList<>();
 
     @Override
