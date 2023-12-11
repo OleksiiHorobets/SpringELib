@@ -671,7 +671,7 @@
                         <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.booksList.pageable.pageNumber}&order_by=${order_by}&dir=${dir}">&laquo;</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="books?page=${requestScope.booksList.pageable.pageNumber}&order_by=${order_by}&dir=${dir}">&laquo;</a>
+                        <a href="books?page=${requestScope.booksList.pageable.pageNumber - 1}&order_by=${order_by}&dir=${dir}">&laquo;</a>
                     </c:otherwise>
                 </c:choose>
             </c:if>
@@ -683,7 +683,7 @@
                         <c:choose>
                             <c:when test="${searchContent != null}">
                                 <a class="active"
-                                   href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&dir=${dir}">${i + 1}</a>
+                                   href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&dir=${dir}">${i}</a>
                             </c:when>
                             <c:otherwise>
                                 <a href="books?page=${i}&order_by=${order_by}&dir=${dir}"
