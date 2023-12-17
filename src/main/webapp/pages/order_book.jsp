@@ -46,6 +46,7 @@
 
             <form action="${pageContext.request.contextPath}/controller?command=order-book&book_id=${sessionScope.book.bookId}"
                   method="post">
+                <sec:csrfInput/>
                 <select name="subscription_type">
                     <option value="true">On subscription</option>
                     <option value="false">To the reading room</option>

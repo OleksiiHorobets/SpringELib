@@ -20,6 +20,3 @@ spring:
   #        show_sql: true
   flyway:
     enabled: true
-  docker:
-    compose:
-      lifecycle-management: start_only

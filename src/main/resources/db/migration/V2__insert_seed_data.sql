@@ -177,9 +177,9 @@ VALUES ('A Daughter of the Snows', 199, 9, '03.04.2018', 5, 3, 2),
 
 INSERT INTO user_data.Roles
     (title)
-VALUES ('USER'),
-       ('LIBRARIAN'),
-       ('ADMIN');
+VALUES ('ROLE_USER'),
+       ('ROLE_LIBRARIAN'),
+       ('ROLE_ADMIN');
 
 
 INSERT INTO user_data.Users

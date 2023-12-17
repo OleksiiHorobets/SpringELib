@@ -2,12 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%--<%@ taglib prefix="custom" uri="/WEB-INF/custom.tld" %>--%>
 
-<c:set var="order_by" scope="request" value="${requestScope.order_by}"/>
+<c:set var="orderBy" scope="request" value="${requestScope.orderBy}"/>
 <c:set var="dir" scope="request" value="${requestScope.dir}"/>
 <c:set var="userRole" scope="request" value="${sessionScope.user.role}"/>
-<c:set var="searchContent" scope="request" value="${requestScope.search}"/>
+<c:set var="searchContent" scope="request" value="${requestScope.searchContent}"/>
 
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"
@@ -29,7 +30,6 @@
 <jsp:include page="header.jsp"/>
 
 <div class="container">
-
     <div class="main-content">
         <div class="books-top-row">
             <p class="books-list-title"><fmt:message key="books.common.label.books.list"/></p>
@@ -45,20 +45,20 @@
                     <th><fmt:message key="common.label.counter"/></th>
 
                     <c:choose>
-                    <c:when test="${order_by eq 'title'}">
+                    <c:when test="${orderBy eq 'title'}">
                     <c:choose>
                     <c:when test="${dir eq 'asc'}">
                     <th class="active">
 
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=title&dir=desc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=title&dir=desc">
                                     <fmt:message key="books.common.label.book_title"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=title&dir=desc">
+                                <a href="books?orderBy=title&dir=desc">
                                     <fmt:message key="books.common.label.book_title"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
@@ -71,13 +71,13 @@
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=title&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=title&dir=asc">
                                     <fmt:message key="books.common.label.book_title"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=title&dir=asc">
+                                <a href="books?orderBy=title&dir=asc">
                                     <fmt:message key="books.common.label.book_title"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
@@ -91,13 +91,13 @@
                     <th>
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=title&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=title&dir=asc">
                                     <fmt:message key="books.common.label.book_title"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=title&dir=asc">
+                                <a href="books?orderBy=title&dir=asc">
                                     <fmt:message key="books.common.label.book_title"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
@@ -108,7 +108,7 @@
                     </c:choose>
 
                     <c:choose>
-                    <c:when test="${order_by eq 'genre'}">
+                    <c:when test="${orderBy eq 'genre'}">
                     <c:choose>
                     <c:when test="${dir eq 'asc'}">
 
@@ -116,13 +116,13 @@
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=genre&dir=desc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=genre&dir=desc">
                                     <fmt:message key="books.common.label.genre"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=genre&dir=desc">
+                                <a href="books?orderBy=genre&dir=desc">
                                     <fmt:message key="books.common.label.genre"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
@@ -134,13 +134,13 @@
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=genre&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=genre&dir=asc">
                                     <fmt:message key="books.common.label.genre"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=genre&dir=asc">
+                                <a href="books?orderBy=genre&dir=asc">
                                     <fmt:message key="books.common.label.genre"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
@@ -155,13 +155,13 @@
                     <th>
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=genre&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=genre&dir=asc">
                                     <fmt:message key="books.common.label.genre"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=genre&dir=asc">
+                                <a href="books?orderBy=genre&dir=asc">
                                     <fmt:message key="books.common.label.genre"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
@@ -172,19 +172,19 @@
                     </c:choose>
 
                     <c:choose>
-                    <c:when test="${order_by eq 'author'}">
+                    <c:when test="${orderBy eq 'author'}">
                     <c:choose>
                     <c:when test="${dir eq 'asc'}">
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=author&dir=desc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=author&dir=desc">
                                     <fmt:message key="books.common.label.author"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=author&dir=desc">
+                                <a href="books?orderBy=author&dir=desc">
                                     <fmt:message key="books.common.label.author"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
@@ -196,13 +196,13 @@
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=author&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=author&dir=asc">
                                     <fmt:message key="books.common.label.author"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=author&dir=asc">
+                                <a href="books?orderBy=author&dir=asc">
                                     <fmt:message key="books.common.label.author"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
@@ -216,13 +216,13 @@
                     <th>
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=author&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=author&dir=asc">
                                     <fmt:message key="books.common.label.author"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=author&dir=asc">
+                                <a href="books?orderBy=author&dir=asc">
                                     <fmt:message key="books.common.label.author"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
@@ -233,19 +233,19 @@
                     </c:choose>
 
                     <c:choose>
-                    <c:when test="${order_by eq 'publisher'}">
+                    <c:when test="${orderBy eq 'publisher'}">
                     <c:choose>
                     <c:when test="${dir eq 'asc'}">
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=publisher&dir=desc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=publisher&dir=desc">
                                     <fmt:message key="books.common.label.publisher"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=publisher&dir=desc">
+                                <a href="books?orderBy=publisher&dir=desc">
                                     <fmt:message key="books.common.label.publisher"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
@@ -257,13 +257,13 @@
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=publisher&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=publisher&dir=asc">
                                     <fmt:message key="books.common.label.publisher"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=publisher&dir=asc">
+                                <a href="books?orderBy=publisher&dir=asc">
                                     <fmt:message key="books.common.label.publisher"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
@@ -277,13 +277,13 @@
                     <th>
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=publisher&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=publisher&dir=asc">
                                     <fmt:message key="books.common.label.publisher"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=publisher&dir=asc">
+                                <a href="books?orderBy=publisher&dir=asc">
                                     <fmt:message key="books.common.label.publisher"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
@@ -294,19 +294,19 @@
                     </c:choose>
 
                     <c:choose>
-                    <c:when test="${order_by eq 'pages'}">
+                    <c:when test="${orderBy eq 'pages'}">
                     <c:choose>
                     <c:when test="${dir eq 'asc'}">
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=pages&dir=desc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=pages&dir=desc">
                                     <fmt:message key="books.common.label.pages"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=pages&dir=desc">
+                                <a href="books?orderBy=pages&dir=desc">
                                     <fmt:message key="books.common.label.pages"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
@@ -319,13 +319,13 @@
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=pages&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=pages&dir=asc">
                                     <fmt:message key="books.common.label.pages"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=pages&dir=asc">
+                                <a href="books?orderBy=pages&dir=asc">
                                     <fmt:message key="books.common.label.pages"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
@@ -340,13 +340,13 @@
                     <th>
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=pages&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=pages&dir=asc">
                                     <fmt:message key="books.common.label.pages"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=pages&dir=asc">
+                                <a href="books?orderBy=pages&dir=asc">
                                     <fmt:message key="books.common.label.pages"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
@@ -357,19 +357,19 @@
                     </c:choose>
 
                     <c:choose>
-                    <c:when test="${order_by eq 'publicationDate'}">
+                    <c:when test="${orderBy eq 'publicationDate'}">
                     <c:choose>
                     <c:when test="${dir eq 'asc'}">
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=publicationDate&dir=desc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=publicationDate&dir=desc">
                                     <fmt:message key="books.common.label.publication_date"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=publicationDate&dir=desc">
+                                <a href="books?orderBy=publicationDate&dir=desc">
                                     <fmt:message key="books.common.label.publication_date"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
@@ -382,13 +382,13 @@
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=publicationDate&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=publicationDate&dir=asc">
                                     <fmt:message key="books.common.label.publication_date"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=publicationDate&dir=asc">
+                                <a href="books?orderBy=publicationDate&dir=asc">
                                     <fmt:message key="books.common.label.publication_date"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
@@ -403,13 +403,13 @@
                     <th>
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=publicationDate&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=publicationDate&dir=asc">
                                     <fmt:message key="books.common.label.publication_date"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=publicationDate&dir=asc">
+                                <a href="books?orderBy=publicationDate&dir=asc">
                                     <fmt:message key="books.common.label.publication_date"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
@@ -421,19 +421,19 @@
                     </c:choose>
 
                     <c:choose>
-                    <c:when test="${order_by eq 'copies'}">
+                    <c:when test="${orderBy eq 'copies'}">
                     <c:choose>
                     <c:when test="${dir eq 'asc'}">
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=copies&dir=desc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=copies&dir=desc">
                                     <fmt:message key="books.common.label.available"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=copies&dir=desc">
+                                <a href="books?orderBy=copies&dir=desc">
                                     <fmt:message key="books.common.label.available"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
@@ -446,13 +446,13 @@
 
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=copies&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=copies&dir=asc">
                                     <fmt:message key="books.common.label.available"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=copies&dir=asc">
+                                <a href="books?orderBy=copies&dir=asc">
                                     <fmt:message key="books.common.label.available"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
@@ -467,13 +467,13 @@
                     <th>
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=copies&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=copies&dir=asc">
                                     <fmt:message key="books.common.label.available"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=copies&dir=asc">
+                                <a href="books?orderBy=copies&dir=asc">
                                     <fmt:message key="books.common.label.available"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
@@ -484,21 +484,21 @@
                     </c:otherwise>
                     </c:choose>
 
-                    <c:if test="${sessionScope.user.role eq 'ADMIN'}">
+                    <sec:authorize access="hasRole('ADMIN')">
                     <c:choose>
-                    <c:when test="${order_by eq 'removed'}">
+                    <c:when test="${orderBy eq 'removed'}">
                     <c:choose>
                     <c:when test="${dir eq 'asc'}">
                     <th class="active">
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=removed&dir=desc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=removed&dir=desc">
                                     <fmt:message key="books.admin.label.removed"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=removed&dir=desc">
+                                <a href="books?orderBy=removed&dir=desc">
                                     <fmt:message key="books.admin.label.removed"/>
                                     <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                 </a>
@@ -511,13 +511,13 @@
 
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=removed&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=removed&dir=asc">
                                     <fmt:message key="books.admin.label.removed"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=removed&dir=asc">
+                                <a href="books?orderBy=removed&dir=asc">
                                     <fmt:message key="books.admin.label.removed"/>
                                     <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                 </a>
@@ -532,13 +532,13 @@
 
                         <c:choose>
                             <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=removed&dir=asc">
+                                <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&orderBy=removed&dir=asc">
                                     <fmt:message key="books.admin.label.removed"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="books?order_by=removed&dir=asc">
+                                <a href="books?orderBy=removed&dir=asc">
                                     <fmt:message key="books.admin.label.removed"/>
                                     <i class="fa fa-sort" aria-hidden="true"></i>
                                 </a>
@@ -547,15 +547,17 @@
                     </th>
                     </c:otherwise>
                     </c:choose>
-
                     <th>
                         <fmt:message key="books.admin.action.update"/>
                     </th>
+                    </sec:authorize>
 
-                    </c:if>
-                    <c:if test="${sessionScope.user.role eq 'USER'}">
+                    <sec:authorize access="hasRole('USER')">
                     <th><fmt:message key="user.books.label.order.book"/></th>
-                    </c:if>
+                    </sec:authorize>
+                    <%--                    <c:if test="${sessionScope.user.role eq 'USER'}">--%>
+                    <%--                    <th><fmt:message key="user.books.label.order.book"/></th>--%>
+                    <%--                    </c:if>--%>
 
 
                     <%--                    <th><fmt:message key="books.common.label.available"/> <i class="fa fa-sort" aria-hidden="true"></i></th>--%>
@@ -564,7 +566,7 @@
                 <tr>
                     <td> ${loop.count + (requestScope.booksList.pageable.pageNumber) * requestScope.booksList.size} </td>
                     <td> ${booksList.title} </td>
-                    <td> ${booksList.genre} </td>
+                    <td> ${booksList.genre.title} </td>
                     <td> ${booksList.author.firstName} ${booksList.author.lastName}</td>
                     <td> ${booksList.publisher.title} </td>
                     <td> ${booksList.pages} </td>
@@ -572,18 +574,17 @@
                     <td> ${booksList.publicationDate} </td>
 
                     <td>
-                            ${booksList.copies}
-                            <%--                        <c:choose>--%>
-                            <%--                            <c:when test="${booksList.copies gt 0}">--%>
-                            <%--                                ${booksList.copies}--%>
-                            <%--                            </c:when>--%>
-                            <%--                            <c:otherwise>--%>
-                            <%--                                <fmt:message key="books.common.unavailable"/>--%>
-                            <%--                            </c:otherwise>--%>
-                            <%--                        </c:choose>--%>
+                        <c:choose>
+                            <c:when test="${booksList.copies gt 0}">
+                                ${booksList.copies}
+                            </c:when>
+                            <c:otherwise>
+                                <fmt:message key="books.common.unavailable"/>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
 
-                    <c:if test="${userRole eq 'ADMIN'}">
+                    <sec:authorize access="hasRole('ADMIN')">
                         <c:choose>
                             <c:when test="${booksList.isRemoved}">
                                 <td class="removed-book">
@@ -598,7 +599,7 @@
                                     </style>
                                     <div class="removed-book-div">
                                         <a class="remove-link"
-                                           href="controller?command=restore-book&book_id=${booksList.bookId}">
+                                           onclick="renewBook(${booksList.bookId})" href="#">
                                             <p class="label"><span class="align"><fmt:message
                                                     key="books.admin.msg.removed"/></span></p>
                                         </a>
@@ -617,8 +618,8 @@
                                         }
                                     </style>
                                     <div class="removed-book-div">
-                                        <a class="remove-link"
-                                           href="controller?command=remove-book&book_id=${booksList.bookId}">
+                                        <a class="remove-link" onclick="removeBook(${booksList.bookId})"
+                                           href="#">
                                             <p class="label"><span class="align"><fmt:message
                                                     key="books.admin.msg.present"/></span></p>
                                         </a>
@@ -636,8 +637,10 @@
                             </div>
 
                         </td>
-                    </c:if>
-                    <c:if test="${userRole eq 'USER'}">
+                    </sec:authorize>
+
+
+                    <sec:authorize access="hasRole('USER')">
                         <c:choose>
                             <c:when test="${booksList.copies gt 0}">
                                 <td class="order-book">
@@ -655,76 +658,109 @@
                                 </td>
                             </c:otherwise>
                         </c:choose>
-
-                    </c:if>
+                    </sec:authorize>
                 </tr>
                 </c:forEach>
             </table>
 
 
         </div>
-        <div class="pages_container">
-            <%--For displaying Previous link except for the 1st page --%>
-            <c:if test="${requestScope.booksList.pageable.pageNumber != 0}">
-                <c:choose>
-                    <c:when test="${searchContent != null}">
-                        <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.booksList.pageable.pageNumber}&order_by=${order_by}&dir=${dir}">&laquo;</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="books?page=${requestScope.booksList.pageable.pageNumber - 1}&order_by=${order_by}&dir=${dir}">&laquo;</a>
-                    </c:otherwise>
-                </c:choose>
-            </c:if>
-            <%--For displaying Page numbers.
-                The when condition does not display a link for the current page--%>
-            <c:forEach begin="0" end="${requestScope.booksList.totalPages - 1}" var="i">
-                <c:choose>
-                    <c:when test="${requestScope.booksList.pageable.pageNumber eq i}">
-                        <c:choose>
-                            <c:when test="${searchContent != null}">
-                                <a class="active"
-                                   href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&dir=${dir}">${i}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="books?page=${i}&order_by=${order_by}&dir=${dir}"
-                                   class="active"> ${i + 1}</a>
-                            </c:otherwise>
-                        </c:choose>
+        <c:if test="${requestScope.booksList.totalPages != 0}">
+            <div class="pages_container">
+                    <%--For displaying Previous link except for the 1st page --%>
+                <c:if test="${requestScope.booksList.pageable.pageNumber != 0}">
+                    <c:choose>
+                        <c:when test="${searchContent != null}">
+                            <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&page=${requestScope.booksList.pageable.pageNumber - 1}&orderBy=${orderBy}&dir=${dir}">&laquo;</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="books?page=${requestScope.booksList.pageable.pageNumber - 1}&orderBy=${orderBy}&dir=${dir}">&laquo;</a>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
+                    <%--For displaying Page numbers.
+                        The when condition does not display a link for the current page--%>
+                <c:forEach begin="0" end="${requestScope.booksList.totalPages - 1}" var="i">
+                    <c:choose>
+                        <c:when test="${requestScope.booksList.pageable.pageNumber eq i}">
+                            <c:choose>
+                                <c:when test="${searchContent != null}">
+                                    <a class="active"
+                                       href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&page=${i}&orderBy=${orderBy}&dir=${dir}">${i + 1}</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="books?page=${i}&orderBy=${orderBy}&dir=${dir}"
+                                       class="active"> ${i + 1}</a>
+                                </c:otherwise>
+                            </c:choose>
 
-                    </c:when>
-                    <c:otherwise>
-                        <%--                        <a href="books?page=${i}&order_by=${order_by}&dir=${dir}">${i + 1}</a>--%>
-                        <c:choose>
-                            <c:when test="${searchContent != null}">
-                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&dir=${dir}">${i + 1}</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="books?page=${i}&order_by=${order_by}&dir=${dir}">${i + 1}</a>
-                            </c:otherwise>
-                        </c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            <%--                        <a href="books?page=${i}&orderBy=${orderBy}&dir=${dir}">${i + 1}</a>--%>
+                            <c:choose>
+                                <c:when test="${searchContent != null}">
+                                    <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&page=${i}&orderBy=${orderBy}&dir=${dir}">${i + 1}</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="books?page=${i}&orderBy=${orderBy}&dir=${dir}">${i + 1}</a>
+                                </c:otherwise>
+                            </c:choose>
 
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            <%--For displaying Next link --%>
-            <c:if test="${requestScope.booksList.pageable.pageNumber lt requestScope.booksList.totalPages - 1}">
-                <%--                <a href="books?page=${requestScope.booksList.pageable.pageNumber + 1}&order_by=${order_by}&dir=${dir}">&raquo;</a>--%>
-                <c:choose>
-                    <c:when test="${searchContent != null}">
-                        <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.booksList.pageable.pageNumber + 1}&order_by=${order_by}&dir=${dir}">&raquo;</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="books?page=${requestScope.booksList.pageable.pageNumber + 1}&order_by=${order_by}&dir=${dir}">&raquo;</a>
-                    </c:otherwise>
-                </c:choose>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                    <%--For displaying Next link --%>
+                <c:if test="${requestScope.booksList.pageable.pageNumber lt requestScope.booksList.totalPages - 1}">
+                    <%--                <a href="books?page=${requestScope.booksList.pageable.pageNumber + 1}&orderBy=${orderBy}&dir=${dir}">&raquo;</a>--%>
+                    <c:choose>
+                        <c:when test="${searchContent != null}">
+                            <a href="/books/search?searchBy=${requestScope.searchBy}&searchContent=${searchContent}&page=${requestScope.booksList.pageable.pageNumber + 1}&orderBy=${orderBy}&dir=${dir}">&raquo;</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="books?page=${requestScope.booksList.pageable.pageNumber + 1}&orderBy=${orderBy}&dir=${dir}">&raquo;</a>
+                        </c:otherwise>
+                    </c:choose>
 
-            </c:if>
+                </c:if>
 
-        </div>
+            </div>
+        </c:if>
 
     </div>
 </div>
 
+
 <jsp:include page="footer.jsp"/>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function removeBook(bookId) {
+        $.ajax({
+            type: "PATCH",
+            url: "/api/v1/books/" + bookId,
+            data: {
+                isRemoved: true
+            },
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+
+    function renewBook(bookId) {
+        $.ajax({
+            type: "PATCH",
+            url: "/api/v1/books/" + bookId,
+            data: {
+                isRemoved: false
+            },
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+</script>
+
 </body>
 </html>
+

@@ -43,6 +43,7 @@
 
 
         <form action="controller" method="post">
+            <sec:csrfInput/>
             <c:choose>
                 <c:when test="${not empty sessionScope.operation_type}">
                     <input name="command" type="hidden" value="update-book">

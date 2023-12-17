@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 
 <c:set var="language"
@@ -23,44 +24,62 @@
 <div class="header">
     <div class="left-header">
 
-        <a class="active" href="${pageContext.request.contextPath}/controller?command=home"><fmt:message
+        <a class="active" href="${pageContext.request.contextPath}/home"><fmt:message
                 key="header.common.home"/></a>
 
         <a href="${pageContext.request.contextPath}/books"><fmt:message key="header.common.books"/></a>
-
-        <c:choose>
+        <%--        <h1><sec:authentication property="principal.authorities" /></h1>--%>
+        <sec:authorize access="hasRole('USER')">
             <%-- Menu bar for user only--%>
-            <c:when test="${sessionScope.user.role eq 'USER'}">
-                <a href="${pageContext.request.contextPath}/controller?command=display-my-orders"><fmt:message
-                        key="header.user.order"/></a>
-                <a href="${pageContext.request.contextPath}/controller?command=display-my-requested-orders"><fmt:message
-                        key="header.user.requested.orders"/></a>
-            </c:when>
-            <%-- Menu bar for Admin or Librarian only--%>
-            <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">
-                <a href="${pageContext.request.contextPath}/controller?command=display-readers"><fmt:message
-                        key="header.admin.readers"/></a>
-                <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message
-                        key="header.admin.orders"/></a>
-                <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message
-                        key="header.admin.requested.orders"/></a>
-            </c:when>
-            <c:when test="${sessionScope.user.role eq 'ADMIN'}">
-                <a href="${pageContext.request.contextPath}/controller?command=display-users"><fmt:message
-                        key="header.admin.users"/></a>
-                <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message
-                        key="header.admin.orders"/></a>
-                <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message
-                        key="header.admin.requested.orders"/></a>
-            </c:when>
-        </c:choose>
+            <a href="${pageContext.request.contextPath}/controller?command=display-my-orders"><fmt:message
+                    key="header.user.order"/></a>
+            <a href="${pageContext.request.contextPath}/controller?command=display-my-requested-orders"><fmt:message
+                    key="header.user.requested.orders"/></a>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ADMIN')">
+            <a href="${pageContext.request.contextPath}/controller?command=display-users"><fmt:message
+                    key="header.admin.users"/></a>
+            <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message
+                    key="header.admin.orders"/></a>
+            <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message
+                    key="header.admin.requested.orders"/></a>
+        </sec:authorize>
+
+        <%--        </c:choose><c:choose>--%>
+        <%--            &lt;%&ndash; Menu bar for user only&ndash;%&gt;--%>
+        <%--            <c:when test="${sessionScope.user.role eq 'USER'}">--%>
+        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-my-orders"><fmt:message--%>
+        <%--                        key="header.user.order"/></a>--%>
+        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-my-requested-orders"><fmt:message--%>
+        <%--                        key="header.user.requested.orders"/></a>--%>
+        <%--            </c:when>--%>
+        <%--            &lt;%&ndash; Menu bar for Admin or Librarian only&ndash;%&gt;--%>
+        <%--            <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">--%>
+        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-readers"><fmt:message--%>
+        <%--                        key="header.admin.readers"/></a>--%>
+        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message--%>
+        <%--                        key="header.admin.orders"/></a>--%>
+        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message--%>
+        <%--                        key="header.admin.requested.orders"/></a>--%>
+        <%--            </c:when>--%>
+        <%--            <c:when test="${sessionScope.user.role eq 'ADMIN'}">--%>
+        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users"><fmt:message--%>
+        <%--                        key="header.admin.users"/></a>--%>
+        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message--%>
+        <%--                        key="header.admin.orders"/></a>--%>
+        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message--%>
+        <%--                        key="header.admin.requested.orders"/></a>--%>
+        <%--            </c:when>--%>
+        <%--        </c:choose>--%>
     </div>
 
     <div class="right-header">
         <div class="search-container">
-            <form action="${pageContext.request.contextPath}/controller">
-                <input name="command" type="hidden" value="search-book">
-                <select name="search_by"
+            <%--            <form action="${pageContext.request.contextPath}/controller">--%>
+            <div id="search-by-div" hidden="hidden">${requestScope.searchBy}</div>
+            <form action="/books/search">
+                <sec:csrfInput/>
+                <select name="searchBy"
                         style="font-size: 17px; background: #e9e9e9; font-family: 'Open Sans', sans-serif;">
                     <option class="option-div" value="by_title"><fmt:message
                             key="header.common.search.by.title"/></option>
@@ -68,7 +87,8 @@
                             key="header.common.search.by.author"/></option>
                 </select>
                 <label>
-                    <input type="text" placeholder="<fmt:message key="header.common.search"/>" name="search"/>
+                    <input type="text" placeholder="<fmt:message key="header.common.search"/>"
+                           value="${requestScope.searchContent}" name="searchContent"/>
                 </label>
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
@@ -87,18 +107,17 @@
 
         </div>
 
-        <c:choose>
-            <c:when test="${sessionScope.user == null}">
-                <a href="${pageContext.request.contextPath}/login&from=header"><fmt:message
-                        key="header.common.login"/></a>
-            </c:when>
-            <c:otherwise>
-                <a href="${pageContext.request.contextPath}/controller?command=my-profile"><fmt:message
-                        key="header.common.profile"/></a>
-                <a href="${pageContext.request.contextPath}/controller?command=logout"><fmt:message
-                        key="header.common.logout"/></a>
-            </c:otherwise>
-        </c:choose>
+
+        <sec:authorize access="isAuthenticated()">
+            <a href="${pageContext.request.contextPath}/controller?command=my-profile"><fmt:message
+                    key="header.common.profile"/></a>
+            <a href="#" onclick="logout()"><fmt:message
+                    key="header.common.logout"/></a>
+        </sec:authorize>
+        <sec:authorize access="isAnonymous()">
+            <a href="${pageContext.request.contextPath}/auth/login?from=header"><fmt:message
+                    key="header.common.login"/></a>
+        </sec:authorize>
     </div>
 </div>
 
@@ -114,4 +133,31 @@
             }
         });
     }
+
+    function logout() {
+        $.ajax({
+            type: "GET",
+            url: "/logout",
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let searchByDiv = document.getElementById('search-by-div');
+        let searchByValue = searchByDiv.textContent.trim();
+
+        let selectElement = document.querySelector('select[name="searchBy"]');
+
+        let options = selectElement.options;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === searchByValue) {
+                options[i].selected = true;
+                break;
+            }
+        }
+    });
 </script>

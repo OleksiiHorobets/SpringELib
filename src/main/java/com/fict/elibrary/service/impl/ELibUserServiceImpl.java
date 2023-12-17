@@ -78,7 +78,7 @@ public class ELibUserServiceImpl implements UserDetailsService, ELibUserService 
     }
 
     private Role getUserRole() {
-        return roleRepository.findUserRole("USER");
+        return roleRepository.findUserRole("ROLE_USER");
     }
 
     private ELibUser buildUser(RegistrationRequest registrationRequest) {

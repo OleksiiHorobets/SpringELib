@@ -4,25 +4,28 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
 @RequestMapping("/language")
 public class LanguageController {
-    @GetMapping(value = "{language}")
-    public String changeLanguage(@PathVariable String language,
-                                 @RequestParam(name = "previousPage", defaultValue = "home") String previousPage,
-                                 HttpSession session) {
-        log.info("Language is set to: {}; For session: {}", language, session.getId());
-        session.setAttribute("language", language);
-
-        return previousPage;
-    }
+//    @GetMapping(value = "{language}")
+//    @PermitAll
+//    @PreAuthorize("permitAll()")
+//    public String changeLanguage(@PathVariable String language,
+//                                 @RequestParam(name = "previousPage", defaultValue = "home") String previousPage,
+//                                 HttpSession session) {
+//        log.info("Language is set to: {}; For session: {}", language, session.getId());
+//        session.setAttribute("language", language);
+//        return previousPage;
+//    }
 
     @PostMapping
-    public ResponseEntity<?> changeLanguagePost(@RequestParam String language,
-                                                HttpSession session) {
+//    @PermitAll
+    public ResponseEntity<?> changeLanguagePost(@RequestParam String language, HttpSession session) {
         log.info("Language is set to: {}; For session: {}", language, session.getId());
         session.setAttribute("language", language);
 

@@ -13,6 +13,7 @@ import java.io.Serializable;
 public final class PublisherDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 0L;
+
     private final Long id;
     private final String title;
 }

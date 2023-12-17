@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
-<%--<c:set var="language" value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"--%>
-<%--       scope="session"/>--%>
+<sec:authorize access="isAuthenticated()">
+    <% response.sendRedirect("/home"); %>
+</sec:authorize>
 
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"
@@ -26,6 +28,7 @@
 <div class="login-container">
     <div class="container">
         <form class="form" id="login" method="POST" action="/login">
+            <sec:csrfInput/>
             <h1 class="form__title"><fmt:message key="loginForm.login"/></h1>
             <div class="form__message form__message--success">
                 <c:if test="${not empty requestScope.reg_msg}">
@@ -57,6 +60,7 @@
             </p>
         </form>
         <form class="form form--hidden" id="createAccount" action="/auth/register" method="post">
+            <sec:csrfInput/>
             <h1 class="form__title">
                 <fmt:message key="registrationForm.registration"/>
             </h1>
