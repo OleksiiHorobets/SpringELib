@@ -24,7 +24,7 @@
     <link rel="icon" href="${pageContext.request.contextPath}/static/img/icon/icon.ico">
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="../common/header.jsp"/>
 
 <div class="container">
     <div class="main-content">
@@ -160,6 +160,6 @@
     </div>
 </div>
 
-<jsp:include page="footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

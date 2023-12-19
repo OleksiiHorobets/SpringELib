@@ -24,7 +24,7 @@
     <link rel="icon" href="${pageContext.request.contextPath}/static/img/icon/icon.ico">
 </head>
 <body>
-<jsp:include page="/pages/header.jsp"/>
+<jsp:include page="../common/header.jsp"/>
 <div class="login-container">
     <div class="container">
         <form class="form" id="login" method="POST" action="/login">
@@ -55,7 +55,7 @@
             </div>
             <button class="form__button" type="submit"><fmt:message key="loginForm.btn.continue"/></button>
             <p class="form__text">
-                <a class="form__link" href="./" id="linkCreateAccount"><fmt:message
+                <a class="form__link" href=".." id="linkCreateAccount"><fmt:message
                         key="loginForm.btn.createAccount"/></a>
             </p>
         </form>
@@ -119,12 +119,12 @@
             </div>
             <button class="form__button" type="submit"><fmt:message key="registrationForm.btn.create"/></button>
             <p class="form__text">
-                <a class="form__link" href="./" id="linkLogin"><fmt:message key="registrationForm.btn.signIn"/></a>
+                <a class="form__link" href=".." id="linkLogin"><fmt:message key="registrationForm.btn.signIn"/></a>
             </p>
         </form>
         <div id="registration_flag" hidden>${requestScope.regForm}</div>
     </div>
 </div>
-<jsp:include page="/pages/footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

@@ -631,7 +631,7 @@
                         <td>
                             <div class="update-book-div">
                                 <a class="remove-link"
-                                   href="controller?command=update-book-redirect&book_id=${booksList.bookId}">
+                                   href="/books/update/${booksList.bookId}">
                                     <fmt:message key="books.admin.action.update"/>
                                 </a>
                             </div>
@@ -735,6 +735,9 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function removeBook(bookId) {
+        let csrfToken = $("meta[name='_csrf']").attr("content");
+        let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
         $.ajax({
             type: "PATCH",
             url: "/api/v1/books/" + bookId,
@@ -743,11 +746,17 @@
             },
             success: function () {
                 location.reload();
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
             }
         });
     }
 
     function renewBook(bookId) {
+        let csrfToken = $("meta[name='_csrf']").attr("content");
+        let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
         $.ajax({
             type: "PATCH",
             url: "/api/v1/books/" + bookId,
@@ -756,6 +765,9 @@
             },
             success: function () {
                 location.reload();
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
             }
         });
     }

@@ -21,14 +21,14 @@
 </head>
 <body>
 <div class="container">
-    <jsp:include page="/pages/header.jsp"/>
+    <jsp:include page="../common/header.jsp"/>
     <div class="msg-container">
         <div class="messages">
             <div class="message"><fmt:message key="error.common.unsupported.operation.title"/></div>
             <div class="message2"><fmt:message key="error.common.unsupported.operation.description"/></div>
         </div>
     </div>
-    <jsp:include page="/pages/footer.jsp"/>
+    <jsp:include page="../common/footer.jsp"/>
 </div>
 </body>
 </html>

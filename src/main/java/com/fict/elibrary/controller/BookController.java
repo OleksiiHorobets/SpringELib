@@ -2,7 +2,10 @@ package com.fict.elibrary.controller;
 
 import com.fict.elibrary.dto.BookDto;
 import com.fict.elibrary.enums.Search;
+import com.fict.elibrary.exception.ResourceNotFoundException;
 import com.fict.elibrary.service.BookService;
+import com.fict.elibrary.service.GenreService;
+import com.fict.elibrary.service.PublisherService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -15,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +29,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
+    private final PublisherService publisherService;
+    private final GenreService genreService;
+
 
     @GetMapping
     public String getAll(
@@ -43,7 +50,19 @@ public class BookController {
         model.addAttribute("orderBy", sortField);
         model.addAttribute("dir", sortDirection);
         model.addAttribute("booksList", bookService.findAll(resolveIfIncludeRemoved(), pageRequest));
-        return "books";
+        return "common/books";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateForm(
+            @PathVariable Long id,
+            Model model
+    ) throws ResourceNotFoundException {
+        model.addAttribute("operationType", "update");
+        model.addAttribute("book", bookService.findById(id));
+        model.addAttribute("genres", genreService.findAll());
+        model.addAttribute("publishers", publisherService.findAll());
+        return "admin/book_edit";
     }
 
     @GetMapping("/search")
@@ -57,6 +76,7 @@ public class BookController {
             Model model,
             HttpSession session
     ) {
+
         log.info("Books search: user with session id: {}", session.getId());
         var sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
         var pageRequest = PageRequest.of(pageNumber, pageSize, sort);
@@ -68,7 +88,7 @@ public class BookController {
         model.addAttribute("orderBy", sortField);
         model.addAttribute("dir", sortDirection);
         model.addAttribute("booksList", books);
-        return "books";
+        return "common/books";
     }
 
     private Page<BookDto> findAllBooksByCriteria(String searchBy, String searchContent, PageRequest pageRequest) {

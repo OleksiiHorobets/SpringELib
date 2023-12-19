@@ -16,4 +16,5 @@ public interface BookService {
 
     BookDto update(Long id, UpdateBookDto updateBookDto) throws ResourceNotFoundException;
 
+    BookDto findById(Long id) throws ResourceNotFoundException;
 }

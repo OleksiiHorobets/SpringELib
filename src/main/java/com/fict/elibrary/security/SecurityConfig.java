@@ -10,13 +10,12 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableMethodSecurity(jsr250Enabled = true, securedEnabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -25,16 +24,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz ->
                                 authz
                                         .requestMatchers("/api/**").hasRole("ADMIN")
                                         .requestMatchers("/auth/**", "/home").permitAll()
-                                        .requestMatchers("/pages/error/**", "/error").permitAll()
-                                        .requestMatchers("/pages/**").permitAll()
+                                        .requestMatchers("/pages/common/**", "/pages/error**").permitAll()
+                                        .requestMatchers("/pages/admin/**").hasAnyRole("ADMIN")
+                                        .requestMatchers("/pages/user/**").hasAnyRole("USER", "ADMIN")
                                         .requestMatchers("/language").permitAll()
                                         .requestMatchers("/static/**").permitAll()
-//                                .requestMatchers("/books/search**").permitAll()
                                         .requestMatchers("/books/**").permitAll()
                                         .anyRequest().authenticated()
 //                                .anyRequest().permitAll()

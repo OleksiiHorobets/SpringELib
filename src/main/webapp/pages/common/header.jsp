@@ -96,8 +96,7 @@
 
 
         <div class="languages">
-
-
+            <sec:csrfMetaTags/>
             <a href="#" onclick="changeLanguage('ua')">
                 <fmt:message key="header.language.ua"/>
             </a>
@@ -124,22 +123,34 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function changeLanguage(language) {
+        let csrfToken = $("meta[name='_csrf']").attr("content");
+        let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
         $.ajax({
             type: "POST",
             url: "/language",
             data: {language: language},
             success: function () {
                 location.reload();
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
             }
         });
     }
 
     function logout() {
+        let csrfToken = $("meta[name='_csrf']").attr("content");
+        let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/logout",
             success: function () {
                 location.reload();
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
             }
         });
     }

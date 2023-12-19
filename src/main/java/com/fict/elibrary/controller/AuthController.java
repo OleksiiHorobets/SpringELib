@@ -19,7 +19,7 @@ public class AuthController {
 
     @GetMapping("/auth/login")
     public String loginRequest(/*@Valid @RequestParam AuthRequest authRequest*/) {
-        return "login-page";
+        return "common/login-page";
     }
 
     @PostMapping(value = "/auth/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -27,7 +27,7 @@ public class AuthController {
         userService.register(registrationRequest);
 
         model.addAttribute("regForm", "regFrom");
-        return "login-page";
+        return "common/login-page";
     }
 
 

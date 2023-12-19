@@ -48,4 +48,13 @@ public class BookServiceImpl implements BookService {
 
         return bookMapper.toDto(bookRepository.save(bookToUpdate));
     }
+
+    @Override
+    public BookDto findById(Long id) throws ResourceNotFoundException {
+        var book = bookRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Book with such id: {%d} not found!".formatted(id)));
+
+        return bookMapper.toDto(book);
+    }
+
 }

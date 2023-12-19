@@ -58,14 +58,6 @@ public class ELibUserServiceImpl implements UserDetailsService, ELibUserService 
         }
     }
 
-//    {
-//    "username": "qwe123",
-//    "email" :"qwe123@qwe.com",
-//    "password":"qwe123",
-//    "firstName":"first",
-//    "lastName":"last"
-//}
-
     @Override
     public void register(RegistrationRequest registrationRequest) throws UserAlreadyExistsException {
         checkIfExists(registrationRequest);
@@ -78,7 +70,7 @@ public class ELibUserServiceImpl implements UserDetailsService, ELibUserService 
     }
 
     private Role getUserRole() {
-        return roleRepository.findUserRole("ROLE_USER");
+        return roleRepository.findByTitle("ROLE_USER");
     }
 
     private ELibUser buildUser(RegistrationRequest registrationRequest) {

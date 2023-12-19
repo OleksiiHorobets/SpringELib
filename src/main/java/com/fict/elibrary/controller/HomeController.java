@@ -11,6 +11,6 @@ public class HomeController {
     @GetMapping
     @PermitAll
     public String home() {
-        return "index";
+        return "common/index";
     }
 }
