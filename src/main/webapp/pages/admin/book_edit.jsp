@@ -67,7 +67,7 @@
             <div class="elem-group inlined">
                 <label class="book-edit-label" for="firstName"><fmt:message
                         key="admin.books.edit.form.label.author.first.name"/></label>
-                <input type="hidden" name="authorId" value="${requestScope.book.author.id}"/>
+<%--                <input type="hidden" name="authorId" value="${requestScope.book.author.id}"/>--%>
                 <input
                         type="text"
                         id="firstName"
@@ -185,7 +185,7 @@
                 const fieldValue = $(this).val();
 
                 // Split author names and create inner JSON
-                if (fieldName === 'firstName' || fieldName === 'lastName' || fieldName === 'authorId') {
+                if (fieldName === 'firstName' || fieldName === 'lastName') {
                     if (!formData['author']) {
                         formData['author'] = {};
                     }

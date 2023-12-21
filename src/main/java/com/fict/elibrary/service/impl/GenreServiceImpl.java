@@ -1,6 +1,7 @@
 package com.fict.elibrary.service.impl;
 
 import com.fict.elibrary.dto.GenreDto;
+import com.fict.elibrary.entity.Genre;
 import com.fict.elibrary.exception.ResourceNotFoundException;
 import com.fict.elibrary.mapper.GenreMapper;
 import com.fict.elibrary.repository.GenreRepository;
@@ -24,10 +25,10 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreDto findById(Long id) throws ResourceNotFoundException {
+    public Genre findById(Long id) throws ResourceNotFoundException {
         var genre = genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Genre with the id {%d} not found!".formatted(id)));
 
-        return genreMapper.toDto(genre);
+        return genre;
     }
 }

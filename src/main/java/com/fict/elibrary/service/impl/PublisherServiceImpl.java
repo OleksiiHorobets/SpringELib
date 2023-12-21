@@ -1,6 +1,7 @@
 package com.fict.elibrary.service.impl;
 
 import com.fict.elibrary.dto.PublisherDto;
+import com.fict.elibrary.entity.Publisher;
 import com.fict.elibrary.exception.ResourceNotFoundException;
 import com.fict.elibrary.mapper.PublisherMapper;
 import com.fict.elibrary.repository.PublisherRepository;
@@ -24,10 +25,8 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public PublisherDto findById(Long id) throws ResourceNotFoundException {
-        var publisher = publisherRepository.findById(id)
+    public Publisher findById(Long id) throws ResourceNotFoundException {
+        return publisherRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Publisher with the id {%d} not found!".formatted(id)));
-
-        return publisherMapper.toDto(publisher);
     }
 }

@@ -10,6 +10,7 @@ import com.fict.elibrary.mapper.BookMapper;
 import com.fict.elibrary.repository.BookRepository;
 import com.fict.elibrary.service.AuthorService;
 import com.fict.elibrary.service.BookService;
+import com.fict.elibrary.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,8 +26,10 @@ import java.util.function.Predicate;
 public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
     private final BookRepository bookRepository;
-
     private final AuthorService authorService;
+    private final GenreService genreService;
+    private final PublisherServiceImpl publisherService;
+
 
     @Override
     public Page<BookDto> findAll(boolean includeRemoved, Pageable pageable) {
@@ -59,7 +62,10 @@ public class BookServiceImpl implements BookService {
         bookMapper.updateBookFromBookDto(updateBookDto, bookToUpdate);
 
         Author author = resolveAuthor(updateBookDto);
+
         bookToUpdate.setAuthor(author);
+        bookToUpdate.setGenre(genreService.findById(updateBookDto.getGenreId()));
+        bookToUpdate.setPublisher(publisherService.findById(updateBookDto.getPublisherId()));
 
         return bookMapper.toDto(bookRepository.save(bookToUpdate));
     }
@@ -67,8 +73,7 @@ public class BookServiceImpl implements BookService {
     private Author resolveAuthor(UpdateBookDto updateBookDto) {
         var authorDto = updateBookDto.getAuthor();
 
-        return authorService.findById(authorDto.getId())
-                .filter(equalByFirstAndLastName(authorDto))
+        return authorService.findByFirstAndLastName(authorDto.getFirstName(), authorDto.getLastName())
                 .orElseGet(() -> new Author(authorDto.getFirstName(), authorDto.getLastName()));
     }
 
