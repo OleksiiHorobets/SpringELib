@@ -23,11 +23,11 @@
 <sec:csrfMetaTags/>
 <div class="container">
     <div class="main-content">
-        <p hidden="hidden" id ="success-update" class="success-msg"><fmt:message key="admin.books.edit.success.msg.updated"/><br></p>
+        <p hidden="hidden" id="success-update" class="success-msg"><fmt:message
+                key="admin.books.edit.success.msg.updated"/><br></p>
+        <p hidden="hidden" id="success-create" class="success-msg"><fmt:message
+                key="admin.books.edit.success.msg.added"/></p><br>
 
-        <c:if test="${not empty requestScope.successfully_added}">
-            <p class="success-msg"><fmt:message key="admin.books.edit.success.msg.added"/></p><br>
-        </c:if>
         <c:if test="${not empty requestScope.invalid_book_data}">
             <p class="error-msg"><fmt:message key="admin.books.edit.error.msg.invalid.data"/></p><br>
         </c:if>
@@ -67,7 +67,7 @@
             <div class="elem-group inlined">
                 <label class="book-edit-label" for="firstName"><fmt:message
                         key="admin.books.edit.form.label.author.first.name"/></label>
-<%--                <input type="hidden" name="authorId" value="${requestScope.book.author.id}"/>--%>
+                <%--                <input type="hidden" name="authorId" value="${requestScope.book.author.id}"/>--%>
                 <input
                         type="text"
                         id="firstName"
@@ -206,7 +206,7 @@
                 let operationType = window.location.pathname;
                 console.log(operationType);
 
-                if (operationType.includes("/books/update") ) {
+                if (operationType.includes("/books/update")) {
                     console.log("Update");
                     update(formData);
                 } else if (operationType.includes("/books/create")) {
@@ -234,10 +234,13 @@
                 contentType: "application/json",
                 dataType: "json",
                 success: function (response) {
+                    $("#success-update").show();
+                    setTimeout(function () {
+                        $("#success-update").hide();
+                    }, 5000);
                     console.log("Form submitted successfully:", response);
                 },
                 error: function (error) {
-                    // Handle the error response here
                     console.error("Error submitting form:", error);
                 },
                 beforeSend: function (xhr) {
@@ -256,6 +259,10 @@
                 url: "/api/v1/books",  // Replace with your actual endpoint
                 data: formData,
                 success: function (response) {
+                    $("#success-create").show();
+                    setTimeout(function () {
+                        $("#success-create").hide();
+                    }, 5000);
                     console.log("Form submitted successfully:", response);
                 },
                 error: function (error) {
