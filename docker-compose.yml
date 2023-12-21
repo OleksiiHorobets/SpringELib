@@ -17,6 +17,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1000M
   redis:
     image: redis:alpine
     restart: always
@@ -27,6 +32,13 @@ services:
     environment:
       - REDIS_PASSWORD=redis-pass
       - REDIS_PORT=6379
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1000M
+
+
 
 volumes:
   data:

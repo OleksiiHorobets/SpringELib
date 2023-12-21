@@ -1,6 +1,7 @@
 package com.fict.elibrary.service;
 
 import com.fict.elibrary.dto.BookDto;
+import com.fict.elibrary.dto.PatchBookDto;
 import com.fict.elibrary.dto.UpdateBookDto;
 import com.fict.elibrary.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
@@ -17,4 +18,6 @@ public interface BookService {
     BookDto update(Long id, UpdateBookDto updateBookDto) throws ResourceNotFoundException;
 
     BookDto findById(Long id) throws ResourceNotFoundException;
+
+    BookDto patchUpdate(Long id, PatchBookDto patchBookDto) throws ResourceNotFoundException;
 }

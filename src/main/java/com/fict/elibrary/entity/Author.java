@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,6 +23,7 @@ import java.util.List;
 @Setter
 @ToString(exclude = "books")
 @Table(name = "authors", schema = "local_lib")
+@NoArgsConstructor
 public class Author {
     @Id
     @SequenceGenerator(name = "ID_GENERATOR_AUTHORS", sequenceName = "LOCAL_LIB.AUTHORS_SEQ", allocationSize = 1)
@@ -38,4 +40,10 @@ public class Author {
     @JsonIgnore
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Book> books = new ArrayList<>();
+
+
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

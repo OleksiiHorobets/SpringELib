@@ -1,3 +1,4 @@
+<%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -22,16 +23,8 @@
 <sec:csrfMetaTags/>
 <div class="container">
     <div class="main-content">
-        <c:if test="${not empty requestScope.operation_type}">
-            <p class="operation-title"><fmt:message key="admin.books.edit.form.title.update"/></p>
-        </c:if>
-        <c:if test="${not empty requestScope.operation_type }">
-            <p class="operation-title"><fmt:message key="admin.books.edit.form.title.add"/></p>
-        </c:if>
+        <p hidden="hidden" id ="success-update" class="success-msg"><fmt:message key="admin.books.edit.success.msg.updated"/><br></p>
 
-        <c:if test="${not empty requestScope.successfully_updated}">
-            <p class="success-msg"><fmt:message key="admin.books.edit.success.msg.updated"/></p><br>
-        </c:if>
         <c:if test="${not empty requestScope.successfully_added}">
             <p class="success-msg"><fmt:message key="admin.books.edit.success.msg.added"/></p><br>
         </c:if>
@@ -44,8 +37,6 @@
 
 
         <form id="book-form" action="" method="post">
-            <sec:csrfInput/>
-<%--            TODO: change for Add book Comand--%>
             <c:choose>
                 <c:when test="${not empty requestScope.operation_type}">
                     <input name="command" type="hidden" value="update-book">
@@ -55,14 +46,14 @@
                 </c:otherwise>
             </c:choose>
 
-            <input name="book_id" type="hidden" value="${requestScope.book.bookId}">
+            <input name="bookId" type="hidden" value="${requestScope.book.bookId}">
             <div class="elem-group">
-                <label class="book-edit-label" for="bookTitle"><fmt:message
+                <label class="book-edit-label" for="title"><fmt:message
                         key="admin.books.edit.form.label.book.title"/></label>
                 <input
                         type="text"
-                        id="bookTitle"
-                        name="book_title"
+                        id="title"
+                        name="title"
                         class="edit-book-input"
                         placeholder="<fmt:message key="admin.books.edit.form.placeholder.title"/>"
                         pattern="^['a-zA-Z?!,.а-яА-ЯёЁ0-9\s\-:]{1,350}$"
@@ -76,11 +67,12 @@
             <div class="elem-group inlined">
                 <label class="book-edit-label" for="firstName"><fmt:message
                         key="admin.books.edit.form.label.author.first.name"/></label>
+                <input type="hidden" name="authorId" value="${requestScope.book.author.id}"/>
                 <input
                         type="text"
                         id="firstName"
                         class="edit-book-input"
-                        name="first_name"
+                        name="firstName"
                         placeholder="<fmt:message key="admin.books.edit.form.placeholder.first.name"/>"
                         pattern="^['a-zA-Z?а-яА-ЯёЁ]{1,50}$"
                         title="<fmt:message key="admin.books.edit.form.validation.msg.name"/>"
@@ -96,7 +88,7 @@
                         type="text"
                         id="secondName"
                         class="edit-book-input"
-                        name="last_name"
+                        name="lastName"
                         placeholder="<fmt:message key="admin.books.edit.form.placeholder.second.name"/>"
                         pattern="^['a-zA-Z?а-яА-ЯёЁ]{1,50}$"
                         title="<fmt:message key="admin.books.edit.form.validation.msg.name"/>"
@@ -108,12 +100,12 @@
             <div class="elem-group inlined">
                 <label class="book-edit-label" for="genre-selection"><fmt:message
                         key="admin.books.edit.form.label.select.genre"/></label>
-                <select class="book-edit-select" id="genre-selection" name="genre" required>
+                <select class="book-edit-select" id="genre-selection" name="genreId" required>
                     <c:if test="${not empty requestScope.book.genre.title }">
                         <option value="${requestScope.book.genre.id}">${requestScope.book.genre.title}</option>
                     </c:if>
                     <c:forEach var="genres" items="${requestScope.genres}" varStatus="loop">
-                        <option value="${genres.title}">${genres.title}</option>
+                        <option value="${genres.id}">${genres.title}</option>
                     </c:forEach>
 
                 </select>
@@ -121,12 +113,12 @@
             <div class="elem-group inlined">
                 <label class="book-edit-label" for="publisher-selection"><fmt:message
                         key="admin.books.edit.form.label.select.publisher"/></label>
-                <select class="book-edit-select" id="publisher-selection" name="publisher" required>
+                <select class="book-edit-select" id="publisher-selection" name="publisherId" required>
                     <c:if test="${not empty requestScope.book.publisher.title }">
-                        <option value="${requestScope.book.publisher.title}">${requestScope.book.publisher.title}</option>
+                        <option value="${requestScope.book.publisher.id}">${requestScope.book.publisher.title}</option>
                     </c:if>
                     <c:forEach var="publishers" items="${requestScope.publishers}" varStatus="loop">
-                        <option value="${publishers.title}">${publishers.title}</option>
+                        <option value="${publishers.id}">${publishers.title}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -137,7 +129,7 @@
                         type="number"
                         class="edit-book-input"
                         id="copies"
-                        name="total_copies"
+                        name="copies"
                         placeholder="2"
                         min="0"
                         value="${requestScope.book.copies}"
@@ -170,9 +162,10 @@
                         class="edit-book-input"
                         type="date"
                         id="publication-date"
-                        name="publication_date"
+                        name="publicationDate"
                         value="${requestScope.book.publicationDate}"
                         required
+                        max="${LocalDate.now()}"
                 />
             </div>
             <button id="edit-book-button" type="submit" style="margin-left: 43%; padding: 10px 20px"><fmt:message
@@ -184,35 +177,63 @@
 </body>
 <script>
     $(document).ready(function () {
-        // Assuming you have a button or event triggering the form submission
-        $("#edit-book-button").on("click", function (event) {
-            // Prevent the default form submission behavior
-            event.preventDefault();
-            let formData = $("#book-form").serialize();
+        function formToJson(form) {
+            const formData = {};
 
-            let operationType = "${requestScope.operationType}";
-            if (operationType === "update") {
-                update(formData);
-            }
-            else if (operationType === "create") {
-                create(formData);
-            }
-            else {
-                window.location.href = "/error/400";
+            $(form).find('input, select').each(function () {
+                const fieldName = $(this).attr('name');
+                const fieldValue = $(this).val();
+
+                // Split author names and create inner JSON
+                if (fieldName === 'firstName' || fieldName === 'lastName' || fieldName === 'authorId') {
+                    if (!formData['author']) {
+                        formData['author'] = {};
+                    }
+                    formData['author'][fieldName] = fieldValue;
+                } else {
+                    formData[fieldName] = fieldValue;
+                }
+            });
+            return JSON.stringify(formData);
+        }
+
+        // Assuming you have a button or event triggering the form submission
+        $("#book-form").on("submit", function (event) {
+            if (this.checkValidity()) {
+                event.preventDefault();
+                let formData = formToJson(this);
+
+                let operationType = window.location.pathname;
+                console.log(operationType);
+
+                if (operationType.includes("/books/update") ) {
+                    console.log("Update");
+                    update(formData);
+                } else if (operationType.includes("/books/create")) {
+                    console.log("Create");
+                    create(formData);
+                } else {
+                    console.log("Not Supported operation!");
+                    window.location.href = "/error/400";
+                }
+            } else {
+                // If the form is not valid, the default behavior will occur
+                console.log("Form is not valid!");
             }
         });
 
-        function update(formData){
+        function update(formData) {
             let csrfToken = $("meta[name='_csrf']").attr("content");
             let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
 
             $.ajax({
                 type: "PUT",  // Adjust the method if your form uses GET or another method
-                url: "/books/${requestScope.book.bookId}",  // Replace with your actual endpoint
+                url: "/api/v1/books/${requestScope.book.bookId}",  // Replace with your actual endpoint
                 data: formData,
+                contentType: "application/json",
+                dataType: "json",
                 success: function (response) {
-
                     console.log("Form submitted successfully:", response);
                 },
                 error: function (error) {
@@ -225,14 +246,14 @@
             });
         }
 
-        function create(formData){
+        function create(formData) {
             let csrfToken = $("meta[name='_csrf']").attr("content");
             let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
 
             $.ajax({
                 type: "POST",  // Adjust the method if your form uses GET or another method
-                url: "/books",  // Replace with your actual endpoint
+                url: "/api/v1/books",  // Replace with your actual endpoint
                 data: formData,
                 success: function (response) {
                     console.log("Form submitted successfully:", response);
