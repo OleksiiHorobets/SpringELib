@@ -1,6 +1,5 @@
 package com.fict.elibrary.dto;
 
-import com.fict.elibrary.entity.Publisher;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
@@ -16,7 +15,7 @@ public class PatchBookDto {
     private final Integer pages;
     @PastOrPresent
     private final LocalDate publicationDate;
-    private final Publisher publisher;
+    private final PublisherDto publisher;
     private final GenreDto genre;
     private final AuthorDto author;
     @Min(0)

@@ -2,7 +2,7 @@ package com.fict.elibrary.mapper;
 
 import com.fict.elibrary.dto.BookDto;
 import com.fict.elibrary.dto.PatchBookDto;
-import com.fict.elibrary.dto.UpdateBookDto;
+import com.fict.elibrary.dto.ModifyBookDto;
 import com.fict.elibrary.entity.Book;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -25,7 +25,7 @@ public interface BookMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 //    @Mapping(source = "isRemoved", target = "removed")
     @Mapping(source = "author", target = "author", ignore = true)
-    void updateBookFromBookDto(UpdateBookDto updateBookDto, @MappingTarget Book book);
+    void updateBookFromBookDto(ModifyBookDto modifyBookDto, @MappingTarget Book book);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "isRemoved", target = "removed")

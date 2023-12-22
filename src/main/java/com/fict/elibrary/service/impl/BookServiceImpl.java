@@ -1,11 +1,12 @@
 package com.fict.elibrary.service.impl;
 
-import com.fict.elibrary.dto.AuthorDto;
 import com.fict.elibrary.dto.BookDto;
+import com.fict.elibrary.dto.ModifyBookDto;
 import com.fict.elibrary.dto.PatchBookDto;
-import com.fict.elibrary.dto.UpdateBookDto;
 import com.fict.elibrary.entity.Author;
+import com.fict.elibrary.entity.Book;
 import com.fict.elibrary.exception.ResourceNotFoundException;
+import com.fict.elibrary.exception.ResourceUniqueViolationException;
 import com.fict.elibrary.mapper.BookMapper;
 import com.fict.elibrary.repository.BookRepository;
 import com.fict.elibrary.service.AuthorService;
@@ -17,8 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.function.Predicate;
 
 @Service
 @Slf4j
@@ -55,31 +54,25 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public BookDto update(Long id, UpdateBookDto updateBookDto) throws ResourceNotFoundException {
+    public BookDto update(Long id, ModifyBookDto modifyBookDto) throws ResourceNotFoundException {
         var bookToUpdate = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book with id {%d} not found!".formatted(id)));
 
-        bookMapper.updateBookFromBookDto(updateBookDto, bookToUpdate);
+        bookMapper.updateBookFromBookDto(modifyBookDto, bookToUpdate);
 
-        Author author = resolveAuthor(updateBookDto);
-
+        Author author = resolveAuthor(modifyBookDto);
         bookToUpdate.setAuthor(author);
-        bookToUpdate.setGenre(genreService.findById(updateBookDto.getGenreId()));
-        bookToUpdate.setPublisher(publisherService.findById(updateBookDto.getPublisherId()));
+        bookToUpdate.setGenre(genreService.findById(modifyBookDto.getGenreId()));
+        bookToUpdate.setPublisher(publisherService.findById(modifyBookDto.getPublisherId()));
 
         return bookMapper.toDto(bookRepository.save(bookToUpdate));
     }
 
-    private Author resolveAuthor(UpdateBookDto updateBookDto) {
-        var authorDto = updateBookDto.getAuthor();
+    private Author resolveAuthor(ModifyBookDto modifyBookDto) {
+        var authorDto = modifyBookDto.getAuthor();
 
         return authorService.findByFirstAndLastName(authorDto.getFirstName(), authorDto.getLastName())
                 .orElseGet(() -> new Author(authorDto.getFirstName(), authorDto.getLastName()));
-    }
-
-    private Predicate<Author> equalByFirstAndLastName(AuthorDto authorDto) {
-        return author -> author.getFirstName().equals(authorDto.getFirstName())
-                && author.getLastName().equals(authorDto.getLastName());
     }
 
     @Override
@@ -99,6 +92,24 @@ public class BookServiceImpl implements BookService {
         log.info("Book after patch: {}", bookToPatch);
 
         return bookMapper.toDto(bookRepository.save(bookToPatch));
+    }
+
+    @Override
+    public BookDto save(ModifyBookDto bookDto) throws ResourceNotFoundException, ResourceUniqueViolationException {
+        var bookToSave = new Book();
+        bookMapper.updateBookFromBookDto(bookDto, bookToSave);
+
+        Author author = resolveAuthor(bookDto);
+        bookToSave.setRemoved(false);
+        bookToSave.setAuthor(author);
+        bookToSave.setGenre(genreService.findById(bookDto.getGenreId()));
+        bookToSave.setPublisher(publisherService.findById(bookDto.getPublisherId()));
+
+        if (bookRepository.checkIfExists(bookToSave)) {
+            throw new ResourceUniqueViolationException("Book with such author, genre, publisher and publication date already exists!");
+        }
+
+        return bookMapper.toDto(bookRepository.save(bookToSave));
     }
 
 }

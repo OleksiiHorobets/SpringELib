@@ -23,28 +23,28 @@
 <sec:csrfMetaTags/>
 <div class="container">
     <div class="main-content">
-        <p hidden="hidden" id="success-update" class="success-msg"><fmt:message
-                key="admin.books.edit.success.msg.updated"/><br></p>
-        <p hidden="hidden" id="success-create" class="success-msg"><fmt:message
-                key="admin.books.edit.success.msg.added"/></p><br>
 
-        <c:if test="${not empty requestScope.invalid_book_data}">
-            <p class="error-msg"><fmt:message key="admin.books.edit.error.msg.invalid.data"/></p><br>
+        <%--        <c:if test="${not empty requestScope.invalid_book_data}">--%>
+        <%--            <p class="error-msg"><fmt:message key="admin.books.edit.error.msg.invalid.data"/></p><br>--%>
+        <%--        </c:if>--%>
+
+        <c:if test="${requestScope.operationType == 'update'}">
+            <p class="operation-title"><fmt:message key="admin.books.edit.form.title.update"/></p>
         </c:if>
-        <c:if test="${not empty requestScope.book_exists}">
-            <p class="error-msg"><fmt:message key="admin.books.edit.error.msg.already.exists"/></p>
+        <c:if test="${requestScope.operationType == 'create'}">
+            <p class="operation-title"><fmt:message key="admin.books.edit.form.title.add"/></p>
         </c:if>
 
 
         <form id="book-form" action="" method="post">
-            <c:choose>
-                <c:when test="${not empty requestScope.operation_type}">
-                    <input name="command" type="hidden" value="update-book">
-                </c:when>
-                <c:otherwise>
-                    <input name="command" type="hidden" value="add-book">
-                </c:otherwise>
-            </c:choose>
+            <%--            <c:choose>--%>
+            <%--                <c:when test="${not empty requestScope.operation_type}">--%>
+            <%--                    <input name="command" type="hidden" value="update-book">--%>
+            <%--                </c:when>--%>
+            <%--                <c:otherwise>--%>
+            <%--                    <input name="command" type="hidden" value="add-book">--%>
+            <%--                </c:otherwise>--%>
+            <%--            </c:choose>--%>
 
             <input name="bookId" type="hidden" value="${requestScope.book.bookId}">
             <div class="elem-group">
@@ -170,6 +170,13 @@
             </div>
             <button id="edit-book-button" type="submit" style="margin-left: 43%; padding: 10px 20px"><fmt:message
                     key="admin.books.edit.form.label.submit.btn"/></button>
+
+            <p hidden="hidden" id="success-update" class="success-msg"><br><fmt:message
+                    key="admin.books.edit.success.msg.updated"/><br></p>
+            <p hidden="hidden" id="success-create" class="success-msg"><br><fmt:message
+                    key="admin.books.edit.success.msg.added"/></p><br>
+            <p hidden="hidden" id="book-already-exists" class="error-msg"><br><fmt:message
+                    key="admin.books.edit.error.msg.already.exists"/></p>
         </form>
     </div>
 </div>
@@ -202,7 +209,7 @@
             if (this.checkValidity()) {
                 event.preventDefault();
                 let formData = formToJson(this);
-
+                console.log(formData)
                 let operationType = window.location.pathname;
                 console.log(operationType);
 
@@ -255,9 +262,11 @@
 
 
             $.ajax({
-                type: "POST",  // Adjust the method if your form uses GET or another method
-                url: "/api/v1/books",  // Replace with your actual endpoint
+                type: "POST",
+                url: "/api/v1/books",
                 data: formData,
+                contentType: "application/json",
+                dataType: "json",
                 success: function (response) {
                     $("#success-create").show();
                     setTimeout(function () {
@@ -265,13 +274,21 @@
                     }, 5000);
                     console.log("Form submitted successfully:", response);
                 },
-                error: function (error) {
-                    console.error("Error submitting form:", error);
+                error: function (xhr, status, error) {
+                    if (xhr.status === 409) {
+                        $("#book-already-exists").show();
+                        setTimeout(function () {
+                            $("#book-already-exists").hide();
+                        }, 5000);
+                    } else {
+                        console.error("Error submitting form:", error);
+                    }
                 },
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(csrfHeader, csrfToken);
                 }
             });
+
         }
     });
 </script>

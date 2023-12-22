@@ -33,11 +33,11 @@
     <div class="main-content">
         <div class="books-top-row">
             <p class="books-list-title"><fmt:message key="books.common.label.books.list"/></p>
-            <c:if test="${sessionScope.user.role eq 'ADMIN'}">
-                <a href="controller?command=add-book-redirect&add_new_pressed=true" class="books-add-new">
+            <sec:authorize access="hasRole('ADMIN')">
+                <a href="/books/create" class="books-add-new">
                     <fmt:message key="admin.books.edit.form.title.add"/>
                 </a>
-            </c:if>
+            </sec:authorize>
         </div>
         <div class="books_list_container">
             <table class="books_table">

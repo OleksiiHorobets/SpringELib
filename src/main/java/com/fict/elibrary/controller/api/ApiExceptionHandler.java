@@ -1,5 +1,6 @@
 package com.fict.elibrary.controller.api;
 
+import com.fict.elibrary.exception.ResourceUniqueViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -20,6 +21,14 @@ public class ApiExceptionHandler {
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         log.error("Validation failed exception: {}", ex.getMessage(), ex);
         return getFieldsValidationErrorsMap(ex);
+    }
+
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ResourceUniqueViolationException.class)
+    public String handleResourceUniqueViolationException(ResourceUniqueViolationException ex) {
+        log.error("Resource is not unique exception: {}", ex.getMessage(), ex);
+        return ex.getMessage();
     }
 
     private static Map<String, String> getFieldsValidationErrorsMap(MethodArgumentNotValidException exception) {

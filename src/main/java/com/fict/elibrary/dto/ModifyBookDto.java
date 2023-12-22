@@ -9,7 +9,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class UpdateBookDto {
+public class ModifyBookDto {
     @NotNull
     @Pattern(regexp = "^['a-zA-Z?!,.а-яА-ЯёЁ0-9\\s\\-:]{1,350}$", message = "Title should not contain special symbols!")
     private final String title;
@@ -22,13 +22,10 @@ public class UpdateBookDto {
     @NotNull
     private final Long publisherId;
     @NotNull
-//    @Size(min = 1, max = 350, message = "Genre title should be in range from 1 to 350 chars")
     private final Long genreId;
     @NotNull
     private final AuthorDto author;
     @NotNull
     @Min(0)
     private final Integer copies;
-//    @NotNull
-//    private final Boolean isRemoved;
 }

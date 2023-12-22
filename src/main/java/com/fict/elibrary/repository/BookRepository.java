@@ -1,10 +1,12 @@
 package com.fict.elibrary.repository;
 
 import com.fict.elibrary.entity.Book;
+import org.hibernate.annotations.Parameter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = """
@@ -29,5 +31,14 @@ public interface BookRepository extends JpaRepository<Book, Long> {
              OR b.author.lastName ILIKE %:authorName%
             """)
     Page<Book> findAllByRemovedAndAuthorName(boolean isRemoved, String authorName, Pageable pageRequest);
+
+    @Query("""
+        SELECT count(b) > 0 FROM Book b
+        WHERE b.author.id = :#{#bookToSave.author.id}
+        AND b.publisher.id = :#{#bookToSave.publisher.id} 
+        AND b.title = :#{#bookToSave.title}
+        AND b.publicationDate = :#{#bookToSave.publicationDate}
+""")
+    boolean checkIfExists(@Param("bookToSave") Book bookToSave);
 
 }

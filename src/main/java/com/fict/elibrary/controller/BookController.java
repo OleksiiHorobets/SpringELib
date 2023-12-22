@@ -65,6 +65,15 @@ public class BookController {
         return "admin/book_edit";
     }
 
+    @GetMapping("/create")
+    public String addNewBook(Model model) {
+        model.addAttribute("operationType", "create");
+        model.addAttribute("genres", genreService.findAll());
+        model.addAttribute("publishers", publisherService.findAll());
+
+        return "admin/book_edit";
+    }
+
     @GetMapping("/search")
     public String searchAll(
             @RequestParam(name = "searchBy") @Valid @Pattern(regexp = "\\b(?:by_title|by_author)\\b") String searchBy,
