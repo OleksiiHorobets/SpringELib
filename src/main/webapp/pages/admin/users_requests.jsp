@@ -79,7 +79,7 @@
                     </c:if>
                     <td> ${orders.bookTitle} </td>
 
-                    <%--                        <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:mm", language)} </td>--%>
+<%--                    <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:mm", language)} </td>--%>
 
                     <c:choose>
                         <c:when test="${orders.onSubscription}">

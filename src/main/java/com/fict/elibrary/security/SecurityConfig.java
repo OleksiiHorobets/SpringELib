@@ -26,17 +26,17 @@ public class SecurityConfig {
         http
 //                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz ->
-                                authz
-                                        .requestMatchers("/api/**").hasRole("ADMIN")
-                                        .requestMatchers("/auth/**", "/home").permitAll()
-                                        .requestMatchers("/pages/common/**", "/pages/error**").permitAll()
-                                        .requestMatchers("/pages/admin/**").hasAnyRole("ADMIN")
-                                        .requestMatchers("/pages/user/**").hasAnyRole("USER", "ADMIN")
-                                        .requestMatchers("/language").permitAll()
-                                        .requestMatchers("/static/**").permitAll()
-                                        .requestMatchers("/books/**").permitAll()
-                                        .anyRequest().authenticated()
-//                                .anyRequest().permitAll()
+                        authz
+                                .requestMatchers("/api/**").hasRole("ADMIN")
+                                .requestMatchers("/pages/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/orders/admin**").hasRole("ADMIN")
+                                .requestMatchers("/pages/user/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/auth/**", "/home").permitAll()
+                                .requestMatchers("/pages/common/**", "/pages/error**").permitAll()
+                                .requestMatchers("/language").permitAll()
+                                .requestMatchers("/static/**").permitAll()
+                                .requestMatchers("/books/**").permitAll()
+                                .anyRequest().authenticated()
                 ).formLogin(
                         form -> form.loginPage("/auth/login")
                                 .loginProcessingUrl("/login")

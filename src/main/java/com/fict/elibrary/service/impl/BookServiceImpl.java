@@ -84,6 +84,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public BookDto patchUpdate(Long id, PatchBookDto patchBookDto) throws ResourceNotFoundException {
         var bookToPatch = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book with id {%d} not found!".formatted(id)));
@@ -95,6 +96,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public BookDto save(ModifyBookDto bookDto) throws ResourceNotFoundException, ResourceUniqueViolationException {
         var bookToSave = new Book();
         bookMapper.updateBookFromBookDto(bookDto, bookToSave);

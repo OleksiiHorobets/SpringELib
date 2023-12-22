@@ -10,16 +10,9 @@
 
     <function>
         <name>formatLocalDateTime</name>
-        <function-class>com.my.library.controller.tag.DateFormatter</function-class>
+        <function-class>com.fict.elibrary.converter.DateFormatter</function-class>
         <function-signature>
             java.lang.String formatLocalDateTime(java.time.LocalDateTime,java.lang.String,java.lang.String)
-        </function-signature>
-    </function>
-    <function>
-        <name>formatDateTime</name>
-        <function-class>com.my.library.controller.tag.DateFormatter</function-class>
-        <function-signature>
-            java.lang.String formatDateTime(java.time.LocalDate, java.lang.String,java.lang.String)
         </function-signature>
     </function>
 </taglib>

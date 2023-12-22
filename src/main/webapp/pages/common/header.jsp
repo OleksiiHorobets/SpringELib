@@ -39,7 +39,7 @@
         <sec:authorize access="hasRole('ADMIN')">
             <a href="${pageContext.request.contextPath}/controller?command=display-users"><fmt:message
                     key="header.admin.users"/></a>
-            <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message
+            <a href="${pageContext.request.contextPath}/orders/admin"><fmt:message
                     key="header.admin.orders"/></a>
             <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message
                     key="header.admin.requested.orders"/></a>

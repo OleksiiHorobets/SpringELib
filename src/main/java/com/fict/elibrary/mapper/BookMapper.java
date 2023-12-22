@@ -1,8 +1,8 @@
 package com.fict.elibrary.mapper;
 
 import com.fict.elibrary.dto.BookDto;
-import com.fict.elibrary.dto.PatchBookDto;
 import com.fict.elibrary.dto.ModifyBookDto;
+import com.fict.elibrary.dto.PatchBookDto;
 import com.fict.elibrary.entity.Book;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;

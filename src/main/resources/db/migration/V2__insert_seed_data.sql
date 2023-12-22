@@ -217,9 +217,10 @@ VALUES (10003, 'admin',
 
 
 INSERT INTO local_lib.Orders
-    (user_id, book_id, order_start_date, order_end_date, return_date)
+    (user_id, book_id, start_date, end_date, return_date)
 VALUES (10000, 1, CURRENT_DATE, CURRENT_DATE + INTERVAL '1 month', NULL),
        (10000, 2, CURRENT_DATE, CURRENT_DATE + INTERVAL '1 month', NULL),
        (10000, 3, CURRENT_DATE, CURRENT_DATE + INTERVAL '1 month', NULL),
        (10000, 42, CURRENT_DATE, CURRENT_DATE + INTERVAL '1 month', NULL),
-       (10000, 50, CURRENT_DATE, CURRENT_DATE + INTERVAL '1 month', NULL);
+       (10000, 50, CURRENT_DATE, CURRENT_DATE - INTERVAL '1 month', NULL),
+       (10000, 50, CURRENT_DATE - INTERVAL '1 month', CURRENT_DATE + INTERVAL '1 month', CURRENT_DATE);

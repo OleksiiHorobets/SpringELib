@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%--<%@ taglib prefix="custom" uri="/WEB-INF/custom.tld" %>--%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="custom" uri="/WEB-INF/custom.tld" %>
 
 
 <c:set var="language"
@@ -11,8 +12,8 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
-<c:set var="command" scope="request"
-       value="${sessionScope.user.role eq 'USER' ? 'display-my-orders' : 'display-users-orders'}"/>
+<c:set var="currPage" scope="request"
+       value="${requestScope.ordersList.pageable.pageNumber}"/>
 
 
 <html lang="${language}">
@@ -25,18 +26,16 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-
+<sec:csrfMetaTags/>
 <div class="container">
     <div class="main-content">
         <div class="top-row">
-            <c:choose>
-                <c:when test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                    <p class="users-orders-title"><fmt:message key="admin.orders.orders.title"/></p>
-                </c:when>
-                <c:otherwise>
-                    <p class="users-orders-title"><fmt:message key="user.orders.orders.title"/></p>
-                </c:otherwise>
-            </c:choose>
+            <sec:authorize access="hasRole('ADMIN')">
+                <p class="users-orders-title"><fmt:message key="admin.orders.orders.title"/></p>
+            </sec:authorize>
+            <sec:authorize access="hasRole('USER')">
+                <p class="users-orders-title"><fmt:message key="user.orders.orders.title"/></p>
+            </sec:authorize>
         </div>
         <div class="books_list_container">
             <table class="books_table">
@@ -45,10 +44,11 @@
                     <th><fmt:message key="common.label.counter"/></th>
 
                     <th><fmt:message key="orders.common.order.id"/></th>
-                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
+
+                    <sec:authorize access="hasRole('ADMIN')">
                         <th><fmt:message key="orders.common.user.id"/></th>
                         <th><fmt:message key="orders.common.user.name"/></th>
-                    </c:if>
+                    </sec:authorize>
 
                     <th><fmt:message key="orders.common.book.title"/></th>
                     <th><fmt:message key="orders.common.order.start.date"/></th>
@@ -57,12 +57,11 @@
                     <th><fmt:message key="orders.common.returned"/></th>
                     <th><fmt:message key="orders.common.fine"/></th>
 
-                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
+                    <sec:authorize access="hasRole('ADMIN')">
                         <th><fmt:message key="librarian.orders.label.return"/></th>
-                    </c:if>
-
+                    </sec:authorize>
                 </tr>
-                <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
+                <c:forEach var="orders" items="${requestScope.ordersList.content}" varStatus="loop">
 
                     <c:choose>
                         <c:when test="${orders.fine != 0.0 and orders.returnDate == null}">
@@ -77,16 +76,17 @@
                     </c:choose>
 
 
-                    <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
+                    <td> ${loop.count + (requestScope.ordersList.pageable.pageNumber) * requestScope.ordersList.size} </td>
                     <td> ${orders.orderId} </td>
-                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                        <td>${orders.userId}</td>
-                        <td>${orders.userName}</td>
-                    </c:if>
-                    <td> ${orders.bookTitle} </td>
 
-                    <%--                    <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:mm", language)} </td>--%>
-                    <%--                    <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy HH:mm", language)} </td>--%>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <td>${orders.user.id}</td>
+                        <td>${orders.user.username}</td>
+                    </sec:authorize>
+                    <td> ${orders.book.title} </td>
+
+                    <td> ${custom:formatLocalDateTime(orders.startDate,"dd MMM yyyy HH:mm", language)} </td>
+                    <td> ${custom:formatLocalDateTime(orders.endDate,"dd MMM yyyy HH:mm", language)} </td>
 
 
                     <c:choose>
@@ -99,7 +99,7 @@
                     </c:choose>
                     <c:choose>
                         <c:when test="${orders.returnDate != null}">
-                            <%--                            <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>--%>
+                            <td> ${custom:formatLocalDateTime(orders.endDate,"dd MMM yyyy hh:mm", language)} </td>
                         </c:when>
                         <c:when test="${orders.returnDate == null and orders.fine != 0.0}">
                             <td><fmt:message key="orders.common.returned.overdue"/></td>
@@ -109,14 +109,13 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <td>${orders.fine}</td>
+                    <td>${orders.fine} $</td>
 
-                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-
+                    <sec:authorize access="hasRole('ADMIN')">
                         <c:choose>
                             <c:when test="${empty orders.returnDate}">
                                 <td class="return-book-td">
-                                    <a href="${pageContext.request.contextPath}/controller?command=return-order&order_id=${orders.orderId}">
+                                    <a id="return-order-link" onclick="returnOrder(${orders.orderId})" href="#">
                                         <fmt:message key="librarian.orders.return"/>
                                     </a>
                                 </td>
@@ -125,41 +124,62 @@
                                 <td><fmt:message key="librarian.orders.already.returned"/></td>
                             </c:otherwise>
                         </c:choose>
-                    </c:if>
+                    </sec:authorize>
                     </tr>
                 </c:forEach>
             </table>
 
 
         </div>
-        <div class="pages_container">
-            <%--For displaying Previous link except for the 1st page --%>
-            <c:if test="${requestScope.page != 1}">
-                <a href="controller?command=${command}&page=${requestScope.page - 1}">&laquo;</a>
-            </c:if>
-            <%--For displaying Page numbers.
-                The when condition does not display a link for the current page--%>
-            <c:forEach begin="1" end="${requestScope.totalPages}" var="i">
-                <c:choose>
-                    <c:when test="${requestScope.page eq i}">
-                        <a href="controller?command=${command}&page=${i}"
-                           class="active"> ${i}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="controller?command=${command}&page=${i}">${i}</a>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            <%--For displaying Next link --%>
-            <c:if test="${requestScope.page lt requestScope.totalPages}">
-                <a href="controller?command=${command}&page=${requestScope.page + 1}">&raquo;</a>
-            </c:if>
+        <c:if test="${requestScope.ordersList.totalPages != 0}">
+            <div class="pages_container">
+                    <%--For displaying Previous link except for the 1st page --%>
+                <c:if test="${currPage != 0}">
+                    <a href="/orders/admin?page=${currPage - 1}">&laquo;</a>
+                </c:if>
+                    <%--For displaying Page numbers.
+                        The when condition does not display a link for the current page--%>
+                <c:forEach begin="0" end="${requestScope.ordersList.totalPages - 1 }" var="i">
+                    <c:choose>
+                        <c:when test="${currPage eq i}">
+                            <a href="/orders/admin?page=${i}"
+                               class="active"> ${i + 1}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="/orders/admin?page=${i}">${i + 1}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                    <%--For displaying Next link --%>
+                <c:if test="${currPage + 1 lt requestScope.ordersList.totalPages}">
+                    <a href="/orders/admin?page=${currPage + 1}">&raquo;</a>
+                </c:if>
 
-        </div>
+            </div>
+
+        </c:if>
 
     </div>
 </div>
 
 <jsp:include page="../common/footer.jsp"/>
 </body>
+
+<script>
+    function returnOrder(id) {
+        let csrfToken = $("meta[name='_csrf']").attr("content");
+        let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+        $.ajax({
+            type: "POST",
+            url: "/api/orders/fulfill/" + id,
+            success: function () {
+                location.reload();
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            }
+        });
+    }
+</script>
 </html>
