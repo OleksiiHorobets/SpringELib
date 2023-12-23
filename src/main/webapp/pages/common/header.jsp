@@ -31,7 +31,7 @@
         <%--        <h1><sec:authentication property="principal.authorities" /></h1>--%>
         <sec:authorize access="hasRole('USER')">
             <%-- Menu bar for user only--%>
-            <a href="${pageContext.request.contextPath}/controller?command=display-my-orders"><fmt:message
+            <a href="${pageContext.request.contextPath}/orders/user"><fmt:message
                     key="header.user.order"/></a>
             <a href="${pageContext.request.contextPath}/controller?command=display-my-requested-orders"><fmt:message
                     key="header.user.requested.orders"/></a>

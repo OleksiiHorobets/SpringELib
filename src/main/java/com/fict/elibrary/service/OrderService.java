@@ -10,4 +10,5 @@ public interface OrderService {
 
     OrderDto fulfillOrderById(Long id) throws ResourceNotFoundException;
 
+    Page<OrderDto> findUsersOrdersById(Long userId, Pageable pageable);
 }

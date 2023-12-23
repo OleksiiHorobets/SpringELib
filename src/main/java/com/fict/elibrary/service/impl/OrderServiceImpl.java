@@ -42,6 +42,13 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(orderRepository.save(orderToFulfill));
     }
 
+    @Override
+    public Page<OrderDto> findUsersOrdersById(Long userId, Pageable pageable) {
+        return orderRepository.findAllByUserId(userId, pageable)
+                .map(orderMapper::toDto)
+                .map(this::addTheFine);
+    }
+
     private OrderDto addTheFine(OrderDto order) {
         order.setFine(countFine(order));
         return order;
