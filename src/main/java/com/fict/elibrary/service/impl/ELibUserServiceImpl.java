@@ -3,6 +3,7 @@ package com.fict.elibrary.service.impl;
 import com.fict.elibrary.dto.auth.RegistrationRequest;
 import com.fict.elibrary.entity.ELibUser;
 import com.fict.elibrary.entity.Role;
+import com.fict.elibrary.exception.ResourceNotFoundException;
 import com.fict.elibrary.exception.UserAlreadyExistsException;
 import com.fict.elibrary.mapper.ELibUserMapper;
 import com.fict.elibrary.repository.ELibUserRepository;
@@ -67,6 +68,12 @@ public class ELibUserServiceImpl implements UserDetailsService, ELibUserService 
         user.setRole(getUserRole());
 
         userRepository.save(user);
+    }
+
+    @Override
+    public ELibUser findById(Long id) throws ResourceNotFoundException {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with such id {%s} not found".formatted(id)));
     }
 
     private Role getUserRole() {

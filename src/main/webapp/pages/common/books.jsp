@@ -645,7 +645,7 @@
                             <c:when test="${booksList.copies gt 0}">
                                 <td class="order-book">
                                     <a class="order-book-link" style="height: 100%; width: 100%; text-align: center"
-                                       href="controller?command=order_book_redirect&book_id=${booksList.bookId}">
+                                       href="/orders/new?bookId=${booksList.bookId}">
                                         <fmt:message key="user.books.action.order.book"/>
                                     </a>
                                 </td>

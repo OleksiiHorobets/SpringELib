@@ -1,10 +1,18 @@
 package com.fict.elibrary.service.impl;
 
 import com.fict.elibrary.config.OrderServiceConfig;
+import com.fict.elibrary.dto.NewOrderDto;
 import com.fict.elibrary.dto.OrderDto;
+import com.fict.elibrary.entity.Book;
+import com.fict.elibrary.entity.ELibUser;
+import com.fict.elibrary.entity.Order;
+import com.fict.elibrary.entity.OrderStatus;
 import com.fict.elibrary.exception.ResourceNotFoundException;
+import com.fict.elibrary.mapper.BookMapper;
 import com.fict.elibrary.mapper.OrderMapper;
 import com.fict.elibrary.repository.OrderRepository;
+import com.fict.elibrary.service.BookService;
+import com.fict.elibrary.service.ELibUserService;
 import com.fict.elibrary.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -24,6 +33,10 @@ public class OrderServiceImpl implements OrderService {
     private final OrderServiceConfig orderServiceConfig;
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final BookMapper bookMapper;
+    private final BookService bookService;
+
+    private final ELibUserService userService;
 
     @Override
     public Page<OrderDto> findAll(Pageable pageable) {
@@ -47,6 +60,56 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByUserId(userId, pageable)
                 .map(orderMapper::toDto)
                 .map(this::addTheFine);
+    }
+
+    @Override
+    public Page<OrderDto> findUsersOrdersByIdAndStatus(Long userId, Pageable pageable, Set<OrderStatus> statuses) {
+        return orderRepository.findAllByUserIdAndOrderStatusIn(userId, statuses, pageable)
+                .map(orderMapper::toDto)
+                .map(this::addTheFine);
+    }
+
+    @Override
+    @Transactional
+    public void placeOrder(Long userId, NewOrderDto orderDto) throws ResourceNotFoundException {
+        var book = bookService.findById(orderDto.getBookId());
+        if (!bookService.canBeOrdered(bookMapper.toDto(book))) {
+            throw new ResourceNotFoundException("Book you are trying to order is not present!");
+        }
+
+        var customer = userService.findById(userId);
+
+        var now = LocalDateTime.now();
+        var order = prepareOrderWithoutEndDate(book, customer, now);
+
+        switch (orderDto.getOrderType()) {
+            case ON_SUBSCRIPTION -> resolveOnSubscription(now, order);
+            case READING_ROOM -> resolveInReadingRoom(now, order);
+        }
+
+        orderRepository.save(order);
+    }
+
+    private void resolveInReadingRoom(LocalDateTime now, Order order) {
+        order.setEndDate(now.plusDays(1));
+        order.setOnSubscription(false);
+    }
+
+    private void resolveOnSubscription(LocalDateTime now, Order order) {
+        order.setEndDate(now.plusDays(orderServiceConfig.getSubscriptionDays()));
+        order.setOnSubscription(true);
+    }
+
+    private Order prepareOrderWithoutEndDate(Book bookToOrder, ELibUser customer, LocalDateTime now) {
+        var order = new Order();
+
+        order.setStartDate(now);
+        bookToOrder.setCopies(bookToOrder.getCopies() - 1);
+        order.setBook(bookToOrder);
+        order.setUser(customer);
+        order.setOrderStatus(OrderStatus.PROCESSING);
+
+        return order;
     }
 
     private OrderDto addTheFine(OrderDto order) {

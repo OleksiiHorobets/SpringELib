@@ -3,6 +3,7 @@ package com.fict.elibrary.service;
 import com.fict.elibrary.dto.BookDto;
 import com.fict.elibrary.dto.ModifyBookDto;
 import com.fict.elibrary.dto.PatchBookDto;
+import com.fict.elibrary.entity.Book;
 import com.fict.elibrary.exception.ResourceNotFoundException;
 import com.fict.elibrary.exception.ResourceUniqueViolationException;
 import org.springframework.data.domain.Page;
@@ -18,10 +19,12 @@ public interface BookService {
 
     BookDto update(Long id, ModifyBookDto modifyBookDto) throws ResourceNotFoundException;
 
-    BookDto findById(Long id) throws ResourceNotFoundException;
+    Book findById(Long id) throws ResourceNotFoundException;
 
     BookDto patchUpdate(Long id, PatchBookDto patchBookDto) throws ResourceNotFoundException;
 
     BookDto save(ModifyBookDto bookDto) throws ResourceNotFoundException, ResourceUniqueViolationException;
+
+    boolean canBeOrdered(BookDto book);
 
 }

@@ -1,5 +1,6 @@
 package com.fict.elibrary.dto;
 
+import com.fict.elibrary.entity.OrderStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -15,4 +16,5 @@ public class OrderDto {
     private LocalDateTime returnDate;
     private Boolean onSubscription;
     private BigDecimal fine;
+    private OrderStatus orderStatus;
 }

@@ -20,6 +20,9 @@ spring:
   #        show_sql: true
   flyway:
     enabled: true
+
 orders:
+  subscription:
+    days: 30
   fine:
     day: 1.0

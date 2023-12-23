@@ -3,6 +3,7 @@ package com.fict.elibrary.controller;
 import com.fict.elibrary.dto.BookDto;
 import com.fict.elibrary.enums.Search;
 import com.fict.elibrary.exception.ResourceNotFoundException;
+import com.fict.elibrary.mapper.BookMapper;
 import com.fict.elibrary.service.BookService;
 import com.fict.elibrary.service.GenreService;
 import com.fict.elibrary.service.PublisherService;
@@ -31,6 +32,7 @@ public class BookController {
     private final BookService bookService;
     private final PublisherService publisherService;
     private final GenreService genreService;
+    private final BookMapper bookMapper;
 
 
     @GetMapping
@@ -59,7 +61,7 @@ public class BookController {
             Model model
     ) throws ResourceNotFoundException {
         model.addAttribute("operationType", "update");
-        model.addAttribute("book", bookService.findById(id));
+        model.addAttribute("book", bookMapper.toDto(bookService.findById(id)));
         model.addAttribute("genres", genreService.findAll());
         model.addAttribute("publishers", publisherService.findAll());
         return "admin/book_edit";

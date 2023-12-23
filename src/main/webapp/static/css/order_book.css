@@ -35,12 +35,11 @@ body {
     text-align: center;
 }
 
-label,
-input {
+.order-book-label{
     display: block;
 }
 
-label {
+.order-book-label {
     font-size: 12px;
     text-transform: uppercase;
     color: #ffffff;
@@ -58,15 +57,14 @@ div.elem-group.inlined {
     margin-left: 1%;
 }
 
-label {
+.order-book-label {
     display: block;
     font-family: "Nanum Gothic";
     padding-bottom: 10px;
     font-size: 1.25em;
 }
 
-input,
-select {
+#subscription-type-select {
     border-radius: 2px;
     border: 2px solid #777;
     box-sizing: border-box;
@@ -82,7 +80,7 @@ hr {
     border: 1px dotted #ccc;
 }
 
-button {
+.submit-order-button {
     height: 50px;
     background: orange;
     border: none;
@@ -93,7 +91,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.submit-order-button:hover {
     border: 2px solid black;
 }
 

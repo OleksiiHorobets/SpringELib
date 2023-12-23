@@ -37,7 +37,10 @@ public class SecurityConfig {
                                 .requestMatchers("/static/**").permitAll()
                                 .requestMatchers("/books/**").permitAll()
                                 .anyRequest().authenticated()
-                ).formLogin(
+                )
+                .exceptionHandling().accessDeniedPage("/pages/error/403.jsp")
+                .and()
+                .formLogin(
                         form -> form.loginPage("/auth/login")
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/home")

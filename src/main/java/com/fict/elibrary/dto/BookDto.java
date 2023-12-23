@@ -23,4 +23,8 @@ public final class BookDto implements Serializable {
     private final AuthorDto author;
     private final Integer copies;
     private final Boolean isRemoved;
+
+    public Boolean isRemoved() {
+        return isRemoved;
+    }
 }

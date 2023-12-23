@@ -31,4 +31,6 @@ public interface BookMapper {
     @Mapping(source = "isRemoved", target = "removed")
     void patchBookFromPatchBookDto(PatchBookDto patchBookDto, @MappingTarget Book book);
 
+    @Mapping(source = "isRemoved", target = "removed")
+    Book toEntity(BookDto bookDto);
 }

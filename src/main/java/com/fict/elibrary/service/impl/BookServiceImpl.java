@@ -76,11 +76,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto findById(Long id) throws ResourceNotFoundException {
+    public Book findById(Long id) throws ResourceNotFoundException {
         var book = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book with such id: {%d} not found!".formatted(id)));
 
-        return bookMapper.toDto(book);
+        return book;
     }
 
     @Override
@@ -112,6 +112,12 @@ public class BookServiceImpl implements BookService {
         }
 
         return bookMapper.toDto(bookRepository.save(bookToSave));
+    }
+
+    @Override
+    public boolean canBeOrdered(BookDto book) {
+        return !book.isRemoved() &&
+                book.getCopies() > 0;
     }
 
 }
