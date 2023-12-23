@@ -13,13 +13,17 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Set;
 
@@ -78,12 +82,37 @@ public class OrderController {
     }
 
     @PostMapping
-    public String addNewOrder(@Valid NewOrderDto orderDto) throws ResourceNotFoundException {
+    public String addNewOrder(@Valid NewOrderDto orderDto, Model model) throws ResourceNotFoundException {
         log.info("Add new order request: {}", orderDto);
 
         orderService.placeOrder(resolveUserId(), orderDto);
+        model.addAttribute("msg", "success");
+        return "redirect:/orders/user/requests?message=success";
+    }
+
+    @GetMapping("/user/requests")
+    public String getMyRequests(
+            @RequestParam(name = "page", defaultValue = "0", required = false) int pageNumber,
+            @RequestParam(name = "size", defaultValue = "5", required = false) int pageSize,
+            @RequestParam(name = "message", required = false) String message,
+            Model model
+    ) {
+        var userId = resolveUserId();
+        log.info("Get Users requests for user id: {}", userId);
+
+        var pageRequest = PageRequest.of(pageNumber, pageSize);
+        model.addAttribute("requestsList", orderService.findUsersOrdersByIdAndStatus(
+                userId, pageRequest, Set.of(OrderStatus.PROCESSING, OrderStatus.REJECTED)));
+        model.addAttribute("msg", message);
 
         return "user/my_requests";
+    }
+
+    @DeleteMapping("/cancel/{orderId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void cancelOrder(@PathVariable Long orderId) {
+        long userId = resolveUserId();
+        orderService.cancelOrder(userId, orderId);
     }
 
     private long resolveUserId() {

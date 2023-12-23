@@ -43,7 +43,6 @@ public class Order {
     private LocalDateTime returnDate;
     @Column(name = "on_subscription")
     private Boolean onSubscription;
-
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 }

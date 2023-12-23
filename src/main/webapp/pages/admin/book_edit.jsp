@@ -236,7 +236,7 @@
 
             $.ajax({
                 type: "PUT",  // Adjust the method if your form uses GET or another method
-                url: "/api/v1/books/${requestScope.book.bookId}",  // Replace with your actual endpoint
+                url: "/api/v1/books/${requestScope.book.bookId}",
                 data: formData,
                 contentType: "application/json",
                 dataType: "json",

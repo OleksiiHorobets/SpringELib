@@ -20,4 +20,6 @@ public interface OrderService {
 
     void placeOrder(Long userId, NewOrderDto orderDto) throws ResourceNotFoundException;
 
+    void cancelOrder(Long userId, Long orderId);
+
 }

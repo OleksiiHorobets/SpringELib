@@ -33,7 +33,7 @@
             <%-- Menu bar for user only--%>
             <a href="${pageContext.request.contextPath}/orders/user"><fmt:message
                     key="header.user.order"/></a>
-            <a href="${pageContext.request.contextPath}/controller?command=display-my-requested-orders"><fmt:message
+            <a href="/orders/user/requests"><fmt:message
                     key="header.user.requested.orders"/></a>
         </sec:authorize>
         <sec:authorize access="hasRole('ADMIN')">

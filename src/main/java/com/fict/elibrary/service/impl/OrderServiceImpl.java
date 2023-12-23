@@ -90,6 +90,14 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
+    @Override
+    @Transactional
+    public void cancelOrder(Long userId, Long orderId) {
+        log.info("Cancel order for user: {} and orderId: {}", userId, orderId);
+        orderRepository.findByIdAndUserIdAndOrderStatusIn(orderId, userId, Set.of(OrderStatus.PROCESSING))
+                .ifPresent(orderRepository::delete);
+    }
+
     private void resolveInReadingRoom(LocalDateTime now, Order order) {
         order.setEndDate(now.plusDays(1));
         order.setOnSubscription(false);
