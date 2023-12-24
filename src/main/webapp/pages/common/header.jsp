@@ -28,49 +28,20 @@
                 key="header.common.home"/></a>
 
         <a href="${pageContext.request.contextPath}/books"><fmt:message key="header.common.books"/></a>
-        <%--        <h1><sec:authentication property="principal.authorities" /></h1>--%>
         <sec:authorize access="hasRole('USER')">
-            <%-- Menu bar for user only--%>
-            <a href="${pageContext.request.contextPath}/orders/user"><fmt:message
+            <a href="/orders/user"><fmt:message
                     key="header.user.order"/></a>
             <a href="/orders/user/requests"><fmt:message
                     key="header.user.requested.orders"/></a>
         </sec:authorize>
         <sec:authorize access="hasRole('ADMIN')">
-            <a href="${pageContext.request.contextPath}/controller?command=display-users"><fmt:message
+            <a href="/users"><fmt:message
                     key="header.admin.users"/></a>
-            <a href="${pageContext.request.contextPath}/orders/admin"><fmt:message
+            <a href="/orders/admin"><fmt:message
                     key="header.admin.orders"/></a>
-            <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message
+            <a href="/orders/admin/requests"><fmt:message
                     key="header.admin.requested.orders"/></a>
         </sec:authorize>
-
-        <%--        </c:choose><c:choose>--%>
-        <%--            &lt;%&ndash; Menu bar for user only&ndash;%&gt;--%>
-        <%--            <c:when test="${sessionScope.user.role eq 'USER'}">--%>
-        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-my-orders"><fmt:message--%>
-        <%--                        key="header.user.order"/></a>--%>
-        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-my-requested-orders"><fmt:message--%>
-        <%--                        key="header.user.requested.orders"/></a>--%>
-        <%--            </c:when>--%>
-        <%--            &lt;%&ndash; Menu bar for Admin or Librarian only&ndash;%&gt;--%>
-        <%--            <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">--%>
-        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-readers"><fmt:message--%>
-        <%--                        key="header.admin.readers"/></a>--%>
-        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message--%>
-        <%--                        key="header.admin.orders"/></a>--%>
-        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message--%>
-        <%--                        key="header.admin.requested.orders"/></a>--%>
-        <%--            </c:when>--%>
-        <%--            <c:when test="${sessionScope.user.role eq 'ADMIN'}">--%>
-        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users"><fmt:message--%>
-        <%--                        key="header.admin.users"/></a>--%>
-        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message--%>
-        <%--                        key="header.admin.orders"/></a>--%>
-        <%--                <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message--%>
-        <%--                        key="header.admin.requested.orders"/></a>--%>
-        <%--            </c:when>--%>
-        <%--        </c:choose>--%>
     </div>
 
     <div class="right-header">
@@ -108,7 +79,7 @@
 
 
         <sec:authorize access="isAuthenticated()">
-            <a href="${pageContext.request.contextPath}/controller?command=my-profile"><fmt:message
+            <a href="/users/profile"><fmt:message
                     key="header.common.profile"/></a>
             <a href="#" onclick="logout()"><fmt:message
                     key="header.common.logout"/></a>

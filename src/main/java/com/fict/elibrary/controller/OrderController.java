@@ -1,9 +1,9 @@
 package com.fict.elibrary.controller;
 
 import com.fict.elibrary.dto.NewOrderDto;
-import com.fict.elibrary.entity.ELibUser;
 import com.fict.elibrary.entity.OrderStatus;
 import com.fict.elibrary.exception.ResourceNotFoundException;
+import com.fict.elibrary.exception.ResourceUniqueViolationException;
 import com.fict.elibrary.mapper.BookMapper;
 import com.fict.elibrary.service.BookService;
 import com.fict.elibrary.service.OrderService;
@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Set;
+
+import static com.fict.elibrary.utils.UserUtils.resolveUserId;
 
 @Controller
 @Slf4j
@@ -108,17 +109,25 @@ public class OrderController {
         return "user/my_requests";
     }
 
+    @GetMapping("/admin/requests")
+    public String getUsersRequests(
+            @RequestParam(name = "page", defaultValue = "0", required = false) int pageNumber,
+            @RequestParam(name = "size", defaultValue = "5", required = false) int pageSize,
+            Model model
+    ) {
+        log.info("Get Users requests");
+
+        var pageRequest = PageRequest.of(pageNumber, pageSize);
+        model.addAttribute("requestsList", orderService.findAllRequestsOfNonBlockedUsers(pageRequest));
+        return "admin/users_requests";
+    }
+
     @DeleteMapping("/cancel/{orderId}")
     @ResponseStatus(HttpStatus.OK)
-    public void cancelOrder(@PathVariable Long orderId) {
+    public void cancelOrder(@PathVariable Long orderId) throws ResourceUniqueViolationException, ResourceNotFoundException {
         long userId = resolveUserId();
         orderService.cancelOrder(userId, orderId);
     }
 
-    private long resolveUserId() {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        ELibUser eLibUser = (ELibUser) authentication.getPrincipal();
-        return eLibUser.getId();
-    }
 
 }

@@ -4,6 +4,7 @@ import com.fict.elibrary.dto.NewOrderDto;
 import com.fict.elibrary.dto.OrderDto;
 import com.fict.elibrary.entity.OrderStatus;
 import com.fict.elibrary.exception.ResourceNotFoundException;
+import com.fict.elibrary.exception.ResourceUniqueViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,6 +21,10 @@ public interface OrderService {
 
     void placeOrder(Long userId, NewOrderDto orderDto) throws ResourceNotFoundException;
 
-    void cancelOrder(Long userId, Long orderId);
+    void cancelOrder(Long userId, Long orderId) throws ResourceNotFoundException, ResourceUniqueViolationException;
+
+    Page<OrderDto> findAllRequestsOfNonBlockedUsers(Pageable pageable);
+
+    void setOrderStatus(Long id, OrderStatus status) throws ResourceNotFoundException;
 
 }

@@ -235,7 +235,7 @@
 
 
             $.ajax({
-                type: "PUT",  // Adjust the method if your form uses GET or another method
+                type: "PUT",
                 url: "/api/v1/books/${requestScope.book.bookId}",
                 data: formData,
                 contentType: "application/json",

@@ -131,7 +131,7 @@
 
 
         </div>
-        <c:if test="${requestScope.ordersList.totalPages != 0}">
+        <c:if test="${requestScope.ordersList.totalPages > 0}">
             <div class="pages_container">
                     <%--For displaying Previous link except for the 1st page --%>
                 <c:if test="${currPage != 0}">

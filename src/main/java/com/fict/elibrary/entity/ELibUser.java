@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "users", schema = "user_data")
+@ToString
 public class ELibUser implements UserDetails {
     @Id
     @SequenceGenerator(name = "ID_GENERATOR_USERS", sequenceName = "USER_DATA.USERS_SEQ", allocationSize = 1)
@@ -51,7 +53,7 @@ public class ELibUser implements UserDetails {
 
     @Column(name = "is_banned", nullable = false)
     @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
+//    @Setter(AccessLevel.NONE)
     private Boolean isBanned = false;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -68,14 +70,6 @@ public class ELibUser implements UserDetails {
         return isBanned;
     }
 
-    public void ban() {
-        isBanned = true;
-    }
-
-    public void unban() {
-        isBanned = false;
-    }
-
     @Override
     public String getPassword() {
         return password;
@@ -88,7 +82,7 @@ public class ELibUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return !isBanned;
     }
 
     @Override
@@ -98,11 +92,11 @@ public class ELibUser implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return !isBanned;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return !isBanned;
     }
 }

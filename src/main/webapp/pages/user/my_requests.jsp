@@ -99,7 +99,7 @@
 
 
         </div>
-        <c:if test="${requestScope.requestsList.totalPages != 0}">
+        <c:if test="${requestScope.requestsList.totalPages > 0}">
             <c:set var="currPage" scope="request"
                    value="${requestScope.requestsList.pageable.pageNumber}"/>
             <div class="pages_container">

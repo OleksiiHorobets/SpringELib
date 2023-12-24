@@ -31,7 +31,7 @@
             <sec:csrfInput/>
             <h1 class="form__title"><fmt:message key="loginForm.login"/></h1>
             <div class="form__message form__message--success">
-                <c:if test="${not empty requestScope.reg_msg}">
+                <c:if test="${not empty requestScope.regMsg}">
                     <fmt:message key="registrationForm.msg.success"/>
                 </c:if>
             </div>
@@ -39,13 +39,13 @@
                 <c:if test="${param.invalidAuth}">
                     <fmt:message key="loginForm.msg.loginError"/>
                 </c:if>
-                <c:if test="${not empty sessionScope.isBlocked}">
+                <c:if test="${param.isBlocked}">
                     <fmt:message key="loginForm.msg.userIsBlocked"/>
                 </c:if>
             </div>
             <div class="form__input-group">
                 <input id="loginUsername" name="username" type="text" class="form__input" autofocus
-                       placeholder="<fmt:message key="commonForm.username"/>" value="${requestScope.username}">
+                       placeholder="<fmt:message key="commonForm.username"/>" value="${sessionScope.username}">
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
@@ -67,9 +67,9 @@
             <div class="form__message form__message--error"></div>
             <div class="form__input-group">
                 <input type="text" id="signupUsername" name="username" class="form__input" required autofocus
-                       placeholder="<fmt:message key="commonForm.username"/>" value="${sessionScope.regLoginVal}">
+                       placeholder="<fmt:message key="commonForm.username"/>" value="${sessionScope.regUser.username}">
                 <div class="form__input-error-message">
-                    <c:if test="${not empty sessionScope.loginAlreadyExists}">
+                    <c:if test="${not empty requestScope.loginAlreadyExists}">
                         <fmt:message key="registrationForm.login_already_exists"/>
                     </c:if>
 
@@ -77,9 +77,9 @@
             </div>
             <div class="form__input-group">
                 <input type="text" id="signupEmail" class="form__input" name="email" required autofocus
-                       placeholder="<fmt:message key="registrationForm.email"/>" value="${sessionScope.regEmailVal}">
+                       placeholder="<fmt:message key="registrationForm.email"/>" value="${sessionScope.regUser.email}">
                 <div class="form__input-error-message">
-                    <c:if test="${not empty sessionScope.emailAlreadyExists}">
+                    <c:if test="${not empty requestScope.emailAlreadyExists}">
                         <fmt:message key="registrationForm.email_already_exists"/>
                     </c:if>
                 </div>
@@ -98,7 +98,7 @@
             </div>
             <div class="form__input-group">
                 <input type="text" id="signupPhone" class="form__input" name="phoneNumber" autofocus
-                       placeholder="<fmt:message key="registrationForm.phone"/>" value="${sessionScope.regPhoneVal}">
+                       placeholder="<fmt:message key="registrationForm.phone"/>">
                 <div class="form__input-error-message">
                     <c:if test="${not empty sessionScope.phoneAlreadyExists}">
                         <fmt:message key="registrationForm.phone_already_exists"/>
@@ -108,13 +108,13 @@
             <div class="form__input-group">
                 <input type="text" id="firstName" class="form__input" name="firstName" required autofocus
                        placeholder="<fmt:message key="registrationForm.firstName"/>"
-                       value="${sessionScope.regFirstNameVal}">
+                       value="${sessionScope.regUser.firstName}">
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
                 <input type="text" id="secondName" class="form__input" name="lastName" required autofocus
                        placeholder="<fmt:message key="registrationForm.secondName"/>"
-                       value="${sessionScope.regSecondNameVal}">
+                       value="${sessionScope.regUser.lastName}">
                 <div class="form__input-error-message"></div>
             </div>
             <button class="form__button" type="submit"><fmt:message key="registrationForm.btn.create"/></button>

@@ -10,9 +10,13 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +24,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserDetailsService eLibUserService;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,11 +55,14 @@ public class SecurityConfig {
                 )
                 .exceptionHandling().accessDeniedPage("/pages/error/403.jsp")
                 .and()
+                .sessionManagement()
+                .sessionAuthenticationStrategy(new RegisterSessionAuthenticationStrategy(sessionRegistry()))
+                .and()
                 .formLogin(
                         form -> form.loginPage("/auth/login")
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/home")
-                                .failureUrl("/auth/login?invalidAuth=true")
+                                .failureHandler(customAuthenticationFailureHandler)
                                 .permitAll()
                 );
 

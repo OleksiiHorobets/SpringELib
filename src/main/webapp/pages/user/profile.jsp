@@ -25,14 +25,10 @@
         <div>
 
             <label class="profile-label"><fmt:message key="common.profile.login"/></label>
-            <div class="user-data">${requestScope.user.login}</div>
+            <div class="user-data">${requestScope.user.username}</div>
 
             <label class="profile-label"><fmt:message key="common.profile.role"/></label>
             <div class="user-data">${requestScope.user.role}</div>
-
-            <label class="profile-label"><fmt:message key="common.profile.status"/></label>
-            <div class="user-data">${requestScope.user.status}</div>
-
 
             <label class="profile-label"><fmt:message key="common.profile.email"/></label>
             <div class="user-data">${requestScope.user.email}</div>
@@ -47,18 +43,8 @@
             </div>
             <div class="elem-group inlined"><label class="profile-label"><fmt:message
                     key="common.profile.second.name"/></label>
-                <div class="user-data">${requestScope.user.secondName}</div>
+                <div class="user-data">${requestScope.user.lastName}</div>
             </div>
-
-
-            <%--            <form action="${pageContext.request.contextPath}/controller?command=order-book&book_id=${sessionScope.book.bookId}" method="post">--%>
-            <%--                <select name="subscription_type">--%>
-            <%--                    <option value="true">On subscription</option>--%>
-            <%--                    <option value="false">To the reading room</option>--%>
-            <%--                </select>--%>
-            <%--                <button type="submit" style="margin-top:20px; margin-left: 43%; padding: 10px 20px"><fmt:message--%>
-            <%--                        key="admin.books.edit.form.label.submit.btn"/></button>--%>
-            <%--            </form>--%>
 
         </div>
 

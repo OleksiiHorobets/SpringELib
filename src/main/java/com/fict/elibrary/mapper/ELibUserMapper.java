@@ -15,6 +15,7 @@ public interface ELibUserMapper {
 
 
     @Mapping(source = "role", target = "role", qualifiedByName = "roleToString")
+    @Mapping(source = "banned", target = "isBanned")
     ELibUserDto toDto(ELibUser user);
 
     @Named("roleToString")

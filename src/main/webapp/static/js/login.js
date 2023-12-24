@@ -93,6 +93,10 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("passwords do not match ERROR");
             e.preventDefault()
         }
+        let phoneNumberInput = document.getElementById('signupPhone').value;
+        if (phoneNumberInput.trim() === '') {
+            document.getElementById('signupPhone').value = null;
+        }
     });
 
 

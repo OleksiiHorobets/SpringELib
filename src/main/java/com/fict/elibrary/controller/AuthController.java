@@ -3,6 +3,7 @@ package com.fict.elibrary.controller;
 import com.fict.elibrary.dto.auth.RegistrationRequest;
 import com.fict.elibrary.exception.UserAlreadyExistsException;
 import com.fict.elibrary.service.ELibUserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -23,10 +24,11 @@ public class AuthController {
     }
 
     @PostMapping(value = "/auth/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String register(Model model, @Valid RegistrationRequest registrationRequest) throws UserAlreadyExistsException {
+    public String register(Model model, @Valid RegistrationRequest registrationRequest, HttpSession session) throws UserAlreadyExistsException {
+        session.setAttribute("regUser", registrationRequest);
         userService.register(registrationRequest);
-
-        model.addAttribute("regForm", "regFrom");
+        model.addAttribute("regMsg", "success");
+        session.setAttribute("username", registrationRequest.getUsername());
         return "common/login-page";
     }
 

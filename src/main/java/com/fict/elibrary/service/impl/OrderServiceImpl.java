@@ -8,6 +8,7 @@ import com.fict.elibrary.entity.ELibUser;
 import com.fict.elibrary.entity.Order;
 import com.fict.elibrary.entity.OrderStatus;
 import com.fict.elibrary.exception.ResourceNotFoundException;
+import com.fict.elibrary.exception.ResourceUniqueViolationException;
 import com.fict.elibrary.mapper.BookMapper;
 import com.fict.elibrary.mapper.OrderMapper;
 import com.fict.elibrary.repository.OrderRepository;
@@ -25,6 +26,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Set;
+
+import static com.fict.elibrary.entity.OrderStatus.PROCESSING;
+import static com.fict.elibrary.entity.OrderStatus.REJECTED;
 
 @Service
 @Slf4j
@@ -92,10 +96,32 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void cancelOrder(Long userId, Long orderId) {
+    public void cancelOrder(Long userId, Long orderId) throws ResourceNotFoundException, ResourceUniqueViolationException {
         log.info("Cancel order for user: {} and orderId: {}", userId, orderId);
-        orderRepository.findByIdAndUserIdAndOrderStatusIn(orderId, userId, Set.of(OrderStatus.PROCESSING))
-                .ifPresent(orderRepository::delete);
+        var order = orderRepository.findByIdAndUserIdAndOrderStatusIn(orderId, userId, Set.of(PROCESSING))
+                .orElseThrow(() -> new ResourceNotFoundException("Order with id: {%s} not found!".formatted(orderId)));
+
+        var book = order.getBook();
+        book.setCopies(book.getCopies() + 1);
+        bookService.save(book);
+
+        orderRepository.delete(order);
+    }
+
+    @Override
+    public Page<OrderDto> findAllRequestsOfNonBlockedUsers(Pageable pageable) {
+        return orderRepository.findAllRequestsOfNonBannedUserWhereOrderStatusIn(Set.of(PROCESSING, REJECTED), pageable)
+                .map(orderMapper::toDto)
+                .map(this::addTheFine);
+    }
+
+    @Override
+    public void setOrderStatus(Long id, OrderStatus status) throws ResourceNotFoundException {
+        var order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order with such id {%s} is not found!".formatted(id)));
+
+        order.setOrderStatus(status);
+        orderRepository.save(order);
     }
 
     private void resolveInReadingRoom(LocalDateTime now, Order order) {
@@ -115,7 +141,7 @@ public class OrderServiceImpl implements OrderService {
         bookToOrder.setCopies(bookToOrder.getCopies() - 1);
         order.setBook(bookToOrder);
         order.setUser(customer);
-        order.setOrderStatus(OrderStatus.PROCESSING);
+        order.setOrderStatus(PROCESSING);
 
         return order;
     }

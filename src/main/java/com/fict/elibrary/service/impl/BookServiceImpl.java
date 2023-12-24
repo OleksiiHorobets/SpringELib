@@ -115,6 +115,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book save(Book book) throws ResourceNotFoundException, ResourceUniqueViolationException {
+        return bookRepository.save(book);
+    }
+
+    @Override
     public boolean canBeOrdered(BookDto book) {
         return !book.isRemoved() &&
                 book.getCopies() > 0;

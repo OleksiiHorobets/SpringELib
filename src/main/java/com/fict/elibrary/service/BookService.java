@@ -25,6 +25,8 @@ public interface BookService {
 
     BookDto save(ModifyBookDto bookDto) throws ResourceNotFoundException, ResourceUniqueViolationException;
 
+    Book save(Book book) throws ResourceNotFoundException, ResourceUniqueViolationException;
+
     boolean canBeOrdered(BookDto book);
 
 }

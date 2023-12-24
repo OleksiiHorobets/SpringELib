@@ -178,7 +178,6 @@ VALUES ('A Daughter of the Snows', 199, 9, '03.04.2018', 5, 3, 2),
 INSERT INTO user_data.Roles
     (title)
 VALUES ('ROLE_USER'),
-       ('ROLE_LIBRARIAN'),
        ('ROLE_ADMIN');
 
 
@@ -200,9 +199,9 @@ VALUES (10001, 'is_banned_user',
 
 INSERT INTO user_data.Users
 (id, username, password, role_id, email, phone_number, first_name, last_name)
-VALUES (10002, 'librarian',
+VALUES (10002, 'maximus',
         '$argon2id$v=19$m=16384,t=2,p=1$kgBZffntnhd8w753UCymjQ$rbqNvmqwKLf1mtRQcZnfkLe/o2IrjrnJwbLQfysprVk',
-        2, 'librarian@gmail.com', '3803333333', 'mike', 'tayson');
+        1, 'max@gmail.com', '3803333333', 'max', 'tayson');
 
 --password: qwerty123
 
@@ -210,7 +209,7 @@ INSERT INTO user_data.Users
 (id, username, password, role_id, email, phone_number, first_name, last_name)
 VALUES (10003, 'admin',
         '$argon2id$v=19$m=16384,t=2,p=1$kgBZffntnhd8w753UCymjQ$rbqNvmqwKLf1mtRQcZnfkLe/o2IrjrnJwbLQfysprVk',
-        3, 'admin@gmail.com', '3801111111', 'max', 'payne');
+        2, 'admin@gmail.com', '3801111111', 'max', 'payne');
 
 
 --password: admin123
