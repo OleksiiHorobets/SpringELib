@@ -2,7 +2,6 @@ package com.fict.elibrary.controller.api;
 
 import com.fict.elibrary.exception.ResourceNotFoundException;
 import com.fict.elibrary.service.ELibUserService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,8 +23,7 @@ public class UserRestController {
     @ResponseStatus(HttpStatus.OK)
     public void changeStatus(
             @PathVariable Long userId,
-            @RequestParam(name = "isBanned") Boolean isBanned,
-            HttpSession session
+            @RequestParam(name = "isBanned") Boolean isBanned
     ) throws ResourceNotFoundException {
         userService.setUserBlockedStatus(userId, isBanned);
     }

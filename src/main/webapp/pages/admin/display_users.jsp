@@ -46,7 +46,6 @@
 
                 </tr>
                 <c:forEach var="users" items="${requestScope.usersList.content}" varStatus="loop">
-                    <p><c:if test="${users.isBanned eq true}">123</c:if></p>
                     <tr <c:if test="${users.isBanned eq true}">style="background: #d72d2d;"</c:if>>
 
                         <td> ${loop.count + (requestScope.usersList.pageable.pageNumber) * requestScope.usersList.size} </td>

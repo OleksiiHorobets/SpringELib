@@ -114,6 +114,7 @@ public class ELibUserServiceImpl implements UserDetailsService, ELibUserService 
         userRepository.save(user);
     }
 
+
     private void invalidateSession(Long userId) {
         List<Object> principals = sessionRegistry.getAllPrincipals();
         log.debug("Invalidate session: {}", principals);
@@ -122,8 +123,8 @@ public class ELibUserServiceImpl implements UserDetailsService, ELibUserService 
                 if (user.getId().equals(userId)) {
                     List<SessionInformation> sessions = sessionRegistry.getAllSessions(principal, false);
                     for (SessionInformation session : sessions) {
-                        var sessionId = session.getSessionId();
                         session.expireNow();
+//                        sessionRegistry.removeSessionInformation(session.getSessionId());
                     }
                 }
             }

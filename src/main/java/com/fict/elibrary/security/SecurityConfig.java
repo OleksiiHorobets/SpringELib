@@ -15,6 +15,7 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
@@ -37,9 +38,14 @@ public class SecurityConfig {
     }
 
     @Bean
+    public BannedUserFilter bannedUserFilter() {
+        return new BannedUserFilter(sessionRegistry());
+    }
+
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-//                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz ->
                         authz
                                 .requestMatchers("/api/**").hasRole("ADMIN")
@@ -56,6 +62,8 @@ public class SecurityConfig {
                 .exceptionHandling().accessDeniedPage("/pages/error/403.jsp")
                 .and()
                 .sessionManagement()
+                .maximumSessions(1)
+                .and()
                 .sessionAuthenticationStrategy(new RegisterSessionAuthenticationStrategy(sessionRegistry()))
                 .and()
                 .formLogin(
@@ -64,7 +72,7 @@ public class SecurityConfig {
                                 .defaultSuccessUrl("/home")
                                 .failureHandler(customAuthenticationFailureHandler)
                                 .permitAll()
-                );
+                ).addFilterAfter(bannedUserFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
