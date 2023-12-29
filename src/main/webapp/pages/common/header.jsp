@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+
 <script
         src="https://kit.fontawesome.com/d117408745.js"
         crossorigin="anonymous"
@@ -41,6 +42,8 @@
                     key="header.admin.orders"/></a>
             <a href="/orders/admin/requests"><fmt:message
                     key="header.admin.requested.orders"/></a>
+            <a href="/admin/analytics"><fmt:message
+                    key="header.admin.analytics.header"/></a>
         </sec:authorize>
     </div>
 

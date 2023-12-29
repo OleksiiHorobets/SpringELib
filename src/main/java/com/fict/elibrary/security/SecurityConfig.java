@@ -50,6 +50,7 @@ public class SecurityConfig {
                         authz
                                 .requestMatchers("/api/**").hasRole("ADMIN")
                                 .requestMatchers("/pages/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/orders/admin**").hasRole("ADMIN")
                                 .requestMatchers("/pages/user/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/auth/**", "/home").permitAll()

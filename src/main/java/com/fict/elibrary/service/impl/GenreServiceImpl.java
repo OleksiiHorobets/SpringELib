@@ -8,9 +8,15 @@ import com.fict.elibrary.repository.GenreRepository;
 import com.fict.elibrary.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import static org.springframework.data.util.Pair.toMap;
 
 @Service
 @RequiredArgsConstructor
@@ -26,9 +32,16 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre findById(Long id) throws ResourceNotFoundException {
-        var genre = genreRepository.findById(id)
+        return genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Genre with the id {%d} not found!".formatted(id)));
-
-        return genre;
     }
+
+    @Override
+    public Map<Genre, Long> getBookDistributionByGenres() {
+        return genreRepository.getBookDistributionByGenre()
+                .stream()
+                .map(row -> Pair.of((Genre)row[0],(Long) row[1]))
+                .collect(toMap());
+    }
+
 }
