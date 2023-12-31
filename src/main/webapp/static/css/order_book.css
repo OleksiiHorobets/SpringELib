@@ -35,15 +35,15 @@ body {
     text-align: center;
 }
 
-.order-book-label {
-    display: block;
-}
 
 .order-book-label {
-    font-size: 12px;
+    display: block;
     text-transform: uppercase;
     color: #ffffff;
     margin-bottom: 10px;
+    font-family: "Nanum Gothic", serif;
+    padding-bottom: 10px;
+    font-size: 1.25em;
 }
 
 div.elem-group {
@@ -57,19 +57,13 @@ div.elem-group.inlined {
     margin-left: 1%;
 }
 
-.order-book-label {
-    display: block;
-    font-family: "Nanum Gothic";
-    padding-bottom: 10px;
-    font-size: 1.25em;
-}
 
 #subscription-type-select {
     border-radius: 2px;
     border: 2px solid #777;
     box-sizing: border-box;
     font-size: 1.25em;
-    font-family: "Nanum Gothic";
+    font-family: "Nanum Gothic", serif;
     width: 100%;
     padding: 10px;
     outline: 0;
@@ -86,7 +80,7 @@ hr {
     border: none;
     color: white;
     font-size: 1.25em;
-    font-family: "Nanum Gothic";
+    font-family: "Nanum Gothic", serif;
     border-radius: 4px;
     cursor: pointer;
 }

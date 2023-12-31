@@ -37,10 +37,11 @@ body {
 
 .book-edit-label {
     display: block;
-    font-size: 12px;
     text-transform: uppercase;
     color: #ffffff;
     margin-bottom: 10px;
+    padding-bottom: 10px;
+    font-size: 1.25em;
 }
 
 div.elem-group {
@@ -54,11 +55,6 @@ div.elem-group.inlined {
     margin-left: 1%;
 }
 
-.book-edit-label {
-    display: block;
-    padding-bottom: 10px;
-    font-size: 1.25em;
-}
 
 .book-edit-select {
     border-radius: 2px;
@@ -73,12 +69,12 @@ div.elem-group.inlined {
 .edit-book-input {
     display: block;
     border-radius: 2px;
-    border: 2px solid #777;
     box-sizing: border-box;
     font-size: 1.25em;
     width: 100%;
     padding: 10px;
     outline: 0;
+    border: 2px solid #b0bec5;
 }
 
 div.elem-group.inlined input {
@@ -104,12 +100,7 @@ button:hover {
     border: 2px solid black;
 }
 
-.edit-book-input {
-    width: 100%;
-    padding: 10px;
-    outline: 0;
-    border: 2px solid #b0bec5;
-}
+
 
 /* input:invalid {
     border-color: #dd2c00;

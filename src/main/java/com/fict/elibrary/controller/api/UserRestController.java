@@ -28,14 +28,4 @@ public class UserRestController {
         userService.setUserBlockedStatus(userId, isBanned);
     }
 
-//    @Autowired
-//    private FindByIndexNameSessionRepository<? extends Session> sessionRepository;
-//
-//    public void invalidateSessionForBlockedUser(String username) {
-//        Map<String, ? extends Session> sessions = sessionRepository.findByPrincipalName(username);
-//
-//        for (Session session : sessions.values()) {
-//            sessionRepository.deleteById(session.getId());
-//        }
-//    }
 }
