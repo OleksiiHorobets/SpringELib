@@ -2,14 +2,14 @@ package com.fict.elibrary.mapper;
 
 import java.util.List;
 
-public interface BaseMapper<ENTITY, DTO> {
+public interface BaseMapper<E, D> {
 
-    DTO toDto(ENTITY entity);
+    D toDto(E entity);
 
-    ENTITY toEntity(DTO dto);
+    E toEntity(D dto);
 
-    List<DTO> toDtoList(List<ENTITY> entityList);
+    List<D> toDtoList(List<E> entityList);
 
-    List<ENTITY> toEntityList(List<DTO> dtoList);
+    List<E> toEntityList(List<D> dtoList);
 
 }

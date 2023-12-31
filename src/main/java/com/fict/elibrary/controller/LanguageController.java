@@ -12,20 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 @RequestMapping("/language")
 public class LanguageController {
-//    @GetMapping(value = "{language}")
-//    @PermitAll
-//    @PreAuthorize("permitAll()")
-//    public String changeLanguage(@PathVariable String language,
-//                                 @RequestParam(name = "previousPage", defaultValue = "home") String previousPage,
-//                                 HttpSession session) {
-//        log.info("Language is set to: {}; For session: {}", language, session.getId());
-//        session.setAttribute("language", language);
-//        return previousPage;
-//    }
 
     @PostMapping
-//    @PermitAll
-    public ResponseEntity<?> changeLanguagePost(@RequestParam String language, HttpSession session) {
+    public ResponseEntity<Object> changeLanguagePost(@RequestParam String language, HttpSession session) {
         log.info("Language is set to: {}; For session: {}", language, session.getId());
         session.setAttribute("language", language);
 

@@ -28,7 +28,7 @@ public class BookRestController {
     private final BookService bookService;
 
     @PatchMapping("{id}")
-    public ResponseEntity<?> patchBook(
+    public ResponseEntity<BookDto> patchBook(
             @PathVariable Long id,
             @Valid PatchBookDto patchBookDto
     ) throws ResourceNotFoundException {
@@ -38,7 +38,7 @@ public class BookRestController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateBook(
+    public ResponseEntity<BookDto> updateBook(
             @PathVariable Long id,
             @RequestBody @Valid ModifyBookDto modifyBookDto
     ) throws ResourceNotFoundException {

@@ -26,9 +26,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre findById(Long id) throws ResourceNotFoundException {
-        var genre = genreRepository.findById(id)
+        return genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Genre with the id {%d} not found!".formatted(id)));
-
-        return genre;
     }
 }

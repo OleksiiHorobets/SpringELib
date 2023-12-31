@@ -9,16 +9,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.Mappings;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface BookMapper {
 
-    @Mappings({
-            @Mapping(source = "removed", target = "isRemoved"),
-            @Mapping(source = "id", target = "bookId")
-    })
+    @Mapping(source = "removed", target = "isRemoved")
+    @Mapping(source = "id", target = "bookId")
     BookDto toDto(Book entity);
 
 

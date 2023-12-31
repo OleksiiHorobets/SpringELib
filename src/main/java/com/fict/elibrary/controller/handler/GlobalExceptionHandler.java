@@ -41,16 +41,4 @@ class GlobalExceptionHandler {
         return "common/login-page";
     }
 
-
-//    @ExceptionHandler({NoHandlerFoundException.class})
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    public String handleNoHandlerFoundException(NoHandlerFoundException ex, HttpServletRequest httpServletRequest) {
-//        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-//
-//        log.info("Page not found exception: {}", httpServletRequest.getAsyncContext(), ex);
-//
-//        return "error/404";
-//    }
-
-
 }

@@ -13,6 +13,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
+<!DOCTYPE>
 <html lang="${language}">
 <head>
     <meta charset="UTF-8"/>

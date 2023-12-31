@@ -12,6 +12,7 @@ import com.fict.elibrary.repository.BookRepository;
 import com.fict.elibrary.service.AuthorService;
 import com.fict.elibrary.service.BookService;
 import com.fict.elibrary.service.GenreService;
+import com.fict.elibrary.service.PublisherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -27,7 +28,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
     private final GenreService genreService;
-    private final PublisherServiceImpl publisherService;
+    private final PublisherService publisherService;
 
 
     @Override
@@ -77,10 +78,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findById(Long id) throws ResourceNotFoundException {
-        var book = bookRepository.findById(id)
+        return bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book with such id: {%d} not found!".formatted(id)));
-
-        return book;
     }
 
     @Override

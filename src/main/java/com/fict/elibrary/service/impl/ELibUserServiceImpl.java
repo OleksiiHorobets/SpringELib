@@ -119,13 +119,10 @@ public class ELibUserServiceImpl implements UserDetailsService, ELibUserService 
         List<Object> principals = sessionRegistry.getAllPrincipals();
         log.debug("Invalidate session: {}", principals);
         for (Object principal : principals) {
-            if (principal instanceof ELibUser user) {
-                if (user.getId().equals(userId)) {
-                    List<SessionInformation> sessions = sessionRegistry.getAllSessions(principal, false);
-                    for (SessionInformation session : sessions) {
-                        session.expireNow();
-//                        sessionRegistry.removeSessionInformation(session.getSessionId());
-                    }
+            if (principal instanceof ELibUser user && user.getId().equals(userId)) {
+                List<SessionInformation> sessions = sessionRegistry.getAllSessions(principal, false);
+                for (SessionInformation session : sessions) {
+                    session.expireNow();
                 }
             }
         }

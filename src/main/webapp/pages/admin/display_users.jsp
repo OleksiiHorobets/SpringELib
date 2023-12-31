@@ -10,6 +10,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
+<!DOCTYPE>
 <html lang="${language}">
 <head>
     <meta charset="UTF-8"/>
@@ -27,7 +28,7 @@
             <p class="users-list-title"><fmt:message key="admin.user.users.title"/></p>
         </div>
         <div class="users_list_container">
-            <table class="users_table">
+            <table class="users_table" aria-label="users-table">
                 <tr>
                     <th><fmt:message key="common.label.counter"/></th>
 

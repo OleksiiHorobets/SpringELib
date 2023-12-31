@@ -13,6 +13,7 @@
 <fmt:setBundle basename="locale"/>
 
 
+<!DOCTYPE>
 <html lang="${language}">
 <head>
     <meta charset="UTF-8"/>
@@ -36,7 +37,7 @@
             </c:if>
         </div>
         <div class="orders_list_container">
-            <table class="orders_table">
+            <table class="orders_table" aria-label="orders-table">
                 <tr>
                     <th><fmt:message key="common.label.counter"/></th>
                     <th><fmt:message key="orders.common.order.id"/></th>

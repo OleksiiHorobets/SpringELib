@@ -37,10 +37,10 @@ body {
 
 .profile-label {
     display: block;
-    font-size: 12px;
     text-transform: uppercase;
     color: #ffffff;
-    /*margin-bottom: 10px;*/
+    padding: 10px 10px;
+    font-size: 1.25em;
 }
 
 div.elem-group {
@@ -54,12 +54,6 @@ div.elem-group.inlined {
     margin-left: 1%;
 }
 
-.profile-label {
-    /*margin-top: 15px;*/
-    display: block;
-    padding: 10px 10px;
-    font-size: 1.25em;
-}
 
 hr {
     border: 1px dotted #ccc;

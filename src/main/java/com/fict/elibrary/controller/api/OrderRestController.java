@@ -1,5 +1,6 @@
 package com.fict.elibrary.controller.api;
 
+import com.fict.elibrary.dto.OrderDto;
 import com.fict.elibrary.entity.OrderStatus;
 import com.fict.elibrary.exception.ResourceNotFoundException;
 import com.fict.elibrary.service.OrderService;
@@ -22,7 +23,7 @@ public class OrderRestController {
 
 
     @PostMapping("/fulfill/{id}")
-    public ResponseEntity<?> fulfillTheOrder(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<OrderDto> fulfillTheOrder(@PathVariable Long id) throws ResourceNotFoundException {
         var order = orderService.fulfillOrderById(id);
 
         return ResponseEntity.ok(order);

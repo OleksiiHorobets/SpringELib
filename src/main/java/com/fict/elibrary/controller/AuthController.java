@@ -19,7 +19,7 @@ public class AuthController {
     private final ELibUserService userService;
 
     @GetMapping("/auth/login")
-    public String loginRequest(/*@Valid @RequestParam AuthRequest authRequest*/) {
+    public String loginRequest() {
         return "common/login-page";
     }
 

@@ -10,6 +10,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
+<!DOCTYPE>
 <html lang="${language}">
 <head>
     <title>404</title>

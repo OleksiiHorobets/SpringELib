@@ -16,6 +16,7 @@
        value="${requestScope.ordersList.pageable.pageNumber}"/>
 
 
+<!DOCTYPE>
 <html lang="${language}">
 <head>
     <meta charset="UTF-8"/>
@@ -38,7 +39,7 @@
             </sec:authorize>
         </div>
         <div class="books_list_container">
-            <table class="books_table">
+            <table class="books_table" aria-label="orders-table">
 
                 <tr>
                     <th><fmt:message key="common.label.counter"/></th>

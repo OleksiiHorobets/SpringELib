@@ -10,6 +10,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
+<!DOCTYPE>
 <html lang="${language}">
 <head>
     <meta charset="UTF-8"/>
@@ -49,7 +50,6 @@
                 <input name="bookId" type="hidden" value="${requestScope.book.bookId}">
                 <sec:csrfInput/>
                 <select id="subscription-type-select" name="orderType">
-                    <%--                    TODO: add localization--%>
                     <option value="READING_ROOM">To the reading room</option>
                     <option value="ON_SUBSCRIPTION">On subscription (30 days)</option>
                 </select>

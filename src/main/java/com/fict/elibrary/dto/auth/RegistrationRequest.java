@@ -6,9 +6,11 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
 @Builder
-public class RegistrationRequest {
+public class RegistrationRequest implements Serializable {
     @NotNull
     @Pattern(regexp = "^\\w{3,30}$")
     private String username;

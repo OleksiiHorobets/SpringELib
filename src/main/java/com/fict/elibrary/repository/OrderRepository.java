@@ -25,5 +25,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             """)
     Page<Order> findAllRequestsOfNonBannedUserWhereOrderStatusIn(Set<OrderStatus> orderStatuses, Pageable pageable);
 
-
 }
